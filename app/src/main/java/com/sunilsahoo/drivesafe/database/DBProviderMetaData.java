@@ -31,8 +31,8 @@ public class DBProviderMetaData {
 	
 	public static final class Profile implements ProfileColumns {
 		public static final String _ID = "_id";
-		public static final String PATH = "items";
-		public static final String TABLE_NAME = "items";
+		public static final String PATH = "profile";
+		public static final String TABLE_NAME = "profile";
 		public static final Uri CONTENT_URI = Uri.parse("content://"
 				+ AUTHORITY + "/" + PATH);
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd."
@@ -60,7 +60,7 @@ public class DBProviderMetaData {
 	
 	public static final class Report implements ReportColumns {
 		public static final String TABLE_NAME = "report";
-		public static final String PATH = "categories";
+		public static final String PATH = "report";
 		public static final Uri CONTENT_URI = Uri.parse("content://"
 				+ AUTHORITY + "/" + PATH);
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd."

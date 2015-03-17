@@ -33,17 +33,17 @@ public class DBProvider extends ContentProvider {
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, "profile",
+		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, Profile.PATH,
 				PROFILE_TYPE_LIST);
-		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, "profile/#",
+		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, Profile.PATH+"/#",
 				PROFILE_TYPE_ONE);
-		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, "daysettings",
+		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, DaySettings.PATH,
 				DAY_SETTINGS_TYPE_LIST);
-		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, "daysettings/#",
+		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, DaySettings.PATH+"/#",
 				DAY_SETTINGS_TYPE_ONE);
-		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, "report",
+		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, Report.PATH,
 				REPORT_TYPE_LIST);
-		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, "report/#",
+		sUriMatcher.addURI(DBProviderMetaData.AUTHORITY, Report.PATH+"/#",
 				REPORT_TYPE_ONE);
 	}
 
