@@ -87,7 +87,7 @@ public class DBProvider extends ContentProvider {
 				ProfileColumns.MAX_SPEED);
 		sItemsProjectionMap.put(ProfileColumns.EMERGENCY_NOS,
 				ProfileColumns.EMERGENCY_NOS);
-		sItemsProjectionMap.put(ProfileColumns.POST_USERTEST_TIME,
+		/*sItemsProjectionMap.put(ProfileColumns.POST_USERTEST_TIME,
 				ProfileColumns.POST_USERTEST_TIME);
 		sItemsProjectionMap.put(ProfileColumns.USERTEST_CHAR_PRESENT_TIME,
 				ProfileColumns.USERTEST_CHAR_PRESENT_TIME);
@@ -106,7 +106,7 @@ public class DBProvider extends ContentProvider {
 		sItemsProjectionMap.put(ProfileColumns.USERTEST_ENABLE,
 				ProfileColumns.USERTEST_ENABLE);
 		sItemsProjectionMap.put(ProfileColumns.WHITE_LIST_APP,
-				ProfileColumns.WHITE_LIST_APP);
+				ProfileColumns.WHITE_LIST_APP);*/
 
 	}
 
@@ -128,7 +128,7 @@ public class DBProvider extends ContentProvider {
 				+ Profile.MAX_SPEED
 				+ " TEXT, "
 				+ Profile.EMERGENCY_NOS
-				+ " TEXT, "
+				/*+ " TEXT, "
 				+ Profile.POST_USERTEST_TIME
 				+ " TEXT, "
 				+ Profile.USERTEST_CHAR_PRESENT_TIME
@@ -147,7 +147,7 @@ public class DBProvider extends ContentProvider {
 				+ " INTEGER ,"
 				+ Profile.USERTEST_ENABLE
 				+ " INTEGER ,"
-				+ Profile.WHITE_LIST_APP
+				+ Profile.WHITE_LIST_APP*/
 				+ " TEXT );";
 
 		private static final String SQL_QUERY_CREATE_DAYSETTINGS = "CREATE TABLE "
