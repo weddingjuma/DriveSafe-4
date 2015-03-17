@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/header"
+        android:background="@color/profile_header">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/saveBtn"
+            android:src="@drawable/ic_checkmark_holo_light"
+            android:padding="5dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_cab_done_holo"
+            android:id="@+id/cancelBtn"
+            android:layout_centerVertical="true"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:text="@string/profile_settings_title"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/saveBtn"
+            android:layout_toLeftOf="@+id/cancelBtn"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/profile_text_color"/>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_alignParentBottom="true"
+        android:fadingEdgeLength="0dp"
+        android:background="@drawable/background_profile">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1"
+                android:layout_margin="10dp"
+                android:id="@+id/profile_settings"
+                android:layout_alignParentTop="true">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/lbl_settings_threshold_speed"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:hint="@string/lbl_settings_threshold_speed_hint"
+                        android:textSize="14sp"
+                        android:textColor="@color/profile_text_color"
+                        android:textColorHint="@color/profile_text_color"
+                        android:id="@+id/speedET"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/emergency_number"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:hint="@string/emergency_number_hint"
+                        android:textSize="14sp"
+                        android:textColor="@color/profile_text_color"
+                        android:textColorHint="@color/profile_text_color"
+                        android:id="@+id/emergencyNumberET"/>
+                </TableRow>
+
+
+            </TableLayout>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="1dp"
+                android:layout_marginLeft="1dp"
+                android:text="@string/day_settings_title"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/profile_text_color"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/profile_settings">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:text="@string/day_settings_starttime_label"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:text="@string/day_settings_endtime_label"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:text="@string/day_settings_enable"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/profile_text_color"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV0"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET0"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET0"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB0" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV1"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET1"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET1"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB1" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV2"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET2"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET2"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB2"
+                        android:textColor="@color/profile_text_color"/>
+                </TableRow>
+
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV3"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET3"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET3"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB3"
+                        android:textColor="@color/profile_text_color"/>
+                </TableRow>
+
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV4"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET4"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET4"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB4"
+                        android:textColor="@color/profile_text_color"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV5"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET5"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET5"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB5" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/day_settings_day_label"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/dayTV6"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/startTimeET6"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <EditText
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/endTimeET6"
+                        android:inputType="number"
+                        android:textColor="@color/profile_text_color"/>
+
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/enableCB6" />
+                </TableRow>
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

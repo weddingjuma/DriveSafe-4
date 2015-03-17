@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/usertest_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:weightSum="1" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.sunilsahoo.drivesafe.ui.Footer
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            layout="@layout/footer" />
+
+        <include
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            layout="@layout/header" />
+        <ScrollView
+            android:id="@+id/imageButtonEmergencySV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header" >
+
+            <RelativeLayout
+                android:id="@+id/imageButtonEmergencyRL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true" >
+
+                <TextView
+                    android:id="@+id/textview_speed_exceed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/lbl_speed_exceed"
+                    android:textColor="#FFFFFF"
+                    android:textAppearance="?android:attr/textAppearanceMedium" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/textView_PassUsertest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/lbl_pass_usertest"
+                    android:textColor="#FFFFFF"
+                    android:layout_below="@+id/textview_speed_exceed">
+                </TextView>
+
+                <LinearLayout
+                    android:id="@+id/layout_TextFields"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/textView_PassUsertest"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center" >
+
+                    <LinearLayout
+                        android:id="@+id/innerLayoutUsertestFields"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right" >
+
+                        <TextView
+                            android:id="@+id/textView_UsertestChar"
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="20dp"
+                            android:text=""
+                            android:textColor="#FFFFFF"
+                            android:textSize="30sp"
+                            android:textStyle="bold" >
+                        </TextView>
+                        <!-- android:layout_width="45dp" -->
+
+                        <EditText
+                            android:id="@+id/editText_UsertestCharEntered"
+                            android:layout_width="65dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_toRightOf="@+id/textView_UsertestChar"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:imeOptions="flagNoExtractUi"
+                            android:inputType="textVisiblePassword"
+                            android:maxLength="1"
+                            android:textSize="25dp" >
+                        </EditText>
+                        <!-- android:layout_width="65dp" -->
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/innerLayoutUsertestIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/innerLayoutUsertestFields"
+                        android:layout_weight="2"
+                        android:gravity="left" >
+
+                        <com.sunilsahoo.drivesafe.ui.IndicatorGallery
+                            android:id="@+id/gallery_UsertestIndicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@+id/textView_UsertestChar"
+                            android:layout_weight="2"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:spacing="5px" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView_TapUsertest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout_TextFields"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/lbl_touch_usertest"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14dip" >
+                </TextView>
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</LinearLayout><!-- From: file:/home/sunil/Downloads/DriveSafe/app/src/main/res/layout/usertest_screen.xml -->

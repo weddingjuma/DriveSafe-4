@@ -1,0 +1,256 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+	package
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:5:5
+	android:versionCode
+		ADDED from AndroidManifest.xml:4:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-sdk
+ADDED from AndroidManifest.xml:7:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		ADDED from AndroidManifest.xml:7:15
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from AndroidManifest.xml:9:5
+	android:name
+		ADDED from AndroidManifest.xml:9:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:10:5
+	android:name
+		ADDED from AndroidManifest.xml:10:22
+uses-permission#android.permission.ACCESS_MOCK_LOCATION
+ADDED from AndroidManifest.xml:11:5
+	android:name
+		ADDED from AndroidManifest.xml:11:22
+uses-permission#android.permission.DISABLE_KEYGUARD
+ADDED from AndroidManifest.xml:12:5
+	android:name
+		ADDED from AndroidManifest.xml:12:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:13:5
+	android:name
+		ADDED from AndroidManifest.xml:13:22
+uses-permission#android.permission.CALL_PHONE
+ADDED from AndroidManifest.xml:14:5
+	android:name
+		ADDED from AndroidManifest.xml:14:22
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from AndroidManifest.xml:15:5
+	android:name
+		ADDED from AndroidManifest.xml:15:22
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from AndroidManifest.xml:16:5
+	android:name
+		ADDED from AndroidManifest.xml:16:22
+uses-permission#android.permission.PROCESS_OUTGOING_CALLS
+ADDED from AndroidManifest.xml:17:5
+	android:name
+		ADDED from AndroidManifest.xml:17:22
+uses-permission#android.permission.BLUETOOTH
+ADDED from AndroidManifest.xml:18:5
+	android:name
+		ADDED from AndroidManifest.xml:18:22
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+uses-permission#android.permission.VIBRATE
+ADDED from AndroidManifest.xml:20:5
+	android:name
+		ADDED from AndroidManifest.xml:20:22
+uses-permission#android.permission.GET_TASKS
+ADDED from AndroidManifest.xml:21:5
+	android:name
+		ADDED from AndroidManifest.xml:21:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:22:5
+	android:name
+		ADDED from AndroidManifest.xml:22:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:23:5
+	android:name
+		ADDED from AndroidManifest.xml:23:22
+application
+ADDED from AndroidManifest.xml:25:5
+	android:label
+		ADDED from AndroidManifest.xml:28:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:26:9
+	android:icon
+		ADDED from AndroidManifest.xml:27:9
+activity#com.sunilsahoo.drivesafe.ui.GPSEnableAlert
+ADDED from AndroidManifest.xml:35:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:39:13
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:37:13
+	android:name
+		ADDED from AndroidManifest.xml:36:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:38:13
+activity#com.sunilsahoo.drivesafe.ui.DaySettingsActivity
+ADDED from AndroidManifest.xml:41:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:44:13
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:42:13
+	android:name
+		ADDED from AndroidManifest.xml:41:19
+	android:launchMode
+		ADDED from AndroidManifest.xml:43:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:45:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:46:17
+	android:name
+		ADDED from AndroidManifest.xml:46:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:47:17
+	android:name
+		ADDED from AndroidManifest.xml:47:27
+activity#com.sunilsahoo.drivesafe.ui.DeviceAdminScreen
+ADDED from AndroidManifest.xml:51:9
+	android:name
+		ADDED from AndroidManifest.xml:51:19
+activity#com.sunilsahoo.drivesafe.ui.UserTestScreen
+ADDED from AndroidManifest.xml:53:9
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:58:13
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:57:13
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:55:13
+	android:name
+		ADDED from AndroidManifest.xml:54:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:56:13
+activity#com.sunilsahoo.drivesafe.ui.UserTestResultAlert
+ADDED from AndroidManifest.xml:60:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:63:13
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:62:13
+	android:name
+		ADDED from AndroidManifest.xml:61:13
+service#com.sunilsahoo.drivesafe.services.MainService
+ADDED from AndroidManifest.xml:66:9
+	android:name
+		ADDED from AndroidManifest.xml:66:18
+receiver#com.sunilsahoo.drivesafe.listener.DeviceRebootReceiver
+ADDED from AndroidManifest.xml:69:9
+	android:enabled
+		ADDED from AndroidManifest.xml:71:13
+	android:permission
+		ADDED from AndroidManifest.xml:72:13
+	android:name
+		ADDED from AndroidManifest.xml:70:13
+intent-filter#android.intent.action.ACTION_SHUTDOWN+android.intent.action.BOOT_COMPLETED+android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:73:13
+action#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:74:17
+	android:name
+		ADDED from AndroidManifest.xml:74:25
+action#android.intent.action.ACTION_SHUTDOWN
+ADDED from AndroidManifest.xml:75:17
+	android:name
+		ADDED from AndroidManifest.xml:75:25
+category#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:76:17
+	android:name
+		ADDED from AndroidManifest.xml:76:27
+receiver#com.sunilsahoo.drivesafe.listener.DeviceLockStatusReceiver
+ADDED from AndroidManifest.xml:79:9
+	android:label
+		ADDED from AndroidManifest.xml:82:13
+	android:description
+		ADDED from AndroidManifest.xml:81:13
+	android:permission
+		ADDED from AndroidManifest.xml:83:13
+	android:name
+		ADDED from AndroidManifest.xml:80:13
+meta-data#android.app.device_admin
+ADDED from AndroidManifest.xml:84:13
+	android:resource
+		ADDED from AndroidManifest.xml:86:17
+	android:name
+		ADDED from AndroidManifest.xml:85:17
+intent-filter#android.app.action.DEVICE_ADMIN_ENABLED
+ADDED from AndroidManifest.xml:88:13
+action#android.app.action.DEVICE_ADMIN_ENABLED
+ADDED from AndroidManifest.xml:89:17
+	android:name
+		ADDED from AndroidManifest.xml:89:25
+receiver#com.sunilsahoo.drivesafe.listener.OutgoingCallReceiver
+ADDED from AndroidManifest.xml:92:9
+	android:name
+		ADDED from AndroidManifest.xml:92:19
+intent-filter#android.intent.action.NEW_OUTGOING_CALL
+ADDED from AndroidManifest.xml:93:13
+	android:priority
+		ADDED from AndroidManifest.xml:93:28
+action#android.intent.action.NEW_OUTGOING_CALL
+ADDED from AndroidManifest.xml:94:17
+	android:name
+		ADDED from AndroidManifest.xml:94:25
+receiver#com.sunilsahoo.drivesafe.listener.BlueToothHeadsetStateChangeReceiver
+ADDED from AndroidManifest.xml:97:9
+	android:name
+		ADDED from AndroidManifest.xml:97:19
+intent-filter#android.bluetooth.headset.action.AUDIO_STATE_CHANGED+android.bluetooth.headset.action.STATE_CHANGED
+ADDED from AndroidManifest.xml:98:13
+action#android.bluetooth.headset.action.STATE_CHANGED
+ADDED from AndroidManifest.xml:99:17
+	android:name
+		ADDED from AndroidManifest.xml:99:25
+action#android.bluetooth.headset.action.AUDIO_STATE_CHANGED
+ADDED from AndroidManifest.xml:100:17
+	android:name
+		ADDED from AndroidManifest.xml:100:25
+receiver#com.sunilsahoo.drivesafe.listener.AlarmReceiver
+ADDED from AndroidManifest.xml:103:9
+	android:name
+		ADDED from AndroidManifest.xml:103:19
+receiver#com.sunilsahoo.drivesafe.listener.TimeChangeReceiver
+ADDED from AndroidManifest.xml:105:9
+	android:name
+		ADDED from AndroidManifest.xml:105:19
+intent-filter#android.intent.action.DATE_CHANGED+android.intent.action.TIMEZONE_CHANGED+android.intent.action.TIME_SET
+ADDED from AndroidManifest.xml:106:13
+	android:priority
+		ADDED from AndroidManifest.xml:106:28
+action#android.intent.action.TIME_SET
+ADDED from AndroidManifest.xml:107:17
+	android:name
+		ADDED from AndroidManifest.xml:107:25
+action#android.intent.action.TIMEZONE_CHANGED
+ADDED from AndroidManifest.xml:108:17
+	android:name
+		ADDED from AndroidManifest.xml:108:25
+action#android.intent.action.DATE_CHANGED
+ADDED from AndroidManifest.xml:109:17
+	android:name
+		ADDED from AndroidManifest.xml:109:25
+provider#com.sunilsahoo.drivesafe.database.DBProvider
+ADDED from AndroidManifest.xml:112:9
+	android:exported
+		ADDED from AndroidManifest.xml:115:13
+	android:authorities
+		ADDED from AndroidManifest.xml:114:13
+	android:readPermission
+		ADDED from AndroidManifest.xml:116:13
+	android:name
+		ADDED from AndroidManifest.xml:113:13
+	android:writePermission
+		ADDED from AndroidManifest.xml:117:13

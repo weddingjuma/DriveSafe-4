@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sunilsahoo.drivesafe"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <!--<activity android:name="com.sunilsahoo.drivesafe.ui.LauncherScreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>-->
+        <activity
+            android:name="com.sunilsahoo.drivesafe.ui.GPSEnableAlert"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="com.sunilsahoo.drivesafe.ui.DaySettingsActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.sunilsahoo.drivesafe.ui.DeviceAdminScreen" >
+        </activity>
+        <activity
+            android:name="com.sunilsahoo.drivesafe.ui.UserTestScreen"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name="com.sunilsahoo.drivesafe.ui.UserTestResultAlert"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <service android:name="com.sunilsahoo.drivesafe.services.MainService" >
+        </service>
+
+        <receiver
+            android:name="com.sunilsahoo.drivesafe.listener.DeviceRebootReceiver"
+            android:enabled="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.sunilsahoo.drivesafe.listener.DeviceLockStatusReceiver"
+            android:description="@string/msg_admin_description"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.sunilsahoo.drivesafe.listener.OutgoingCallReceiver" >
+            <intent-filter android:priority="1" >
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.sunilsahoo.drivesafe.listener.BlueToothHeadsetStateChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.bluetooth.headset.action.STATE_CHANGED" />
+                <action android:name="android.bluetooth.headset.action.AUDIO_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.sunilsahoo.drivesafe.listener.AlarmReceiver" >
+        </receiver>
+        <receiver android:name="com.sunilsahoo.drivesafe.listener.TimeChangeReceiver" >
+            <intent-filter android:priority="1" >
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <provider
+            android:name="com.sunilsahoo.drivesafe.database.DBProvider"
+            android:authorities="com.sunilsahoo.drivesafe"
+            android:exported="false"
+            android:readPermission="true"
+            android:writePermission="true" />
+    </application>
+
+</manifest>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/background">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:id="@+id/relativeLayoutAlertOuter"
+		android:layout_height="match_parent">
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:id="@+id/relativeLayoutAlertInner"
+			android:layout_height="match_parent"
+			android:background="@drawable/alert_back_curved"
+			android:layout_marginTop="50dp"
+			android:layout_marginBottom="45dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp">
+			<TextView
+				android:layout_height="wrap_content"
+				android:id="@+id/testResultTV"
+				android:text="@string/lbl_usertest_disabled"
+				android:layout_width="wrap_content"
+				android:layout_below="@+id/resultIV"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="20dp"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="22dp"
+				android:layout_marginBottom="5dp"
+				android:textColor="#ffffff"
+				android:textSize="25sp"></TextView>
+			<ImageView
+				android:id="@+id/resultIV"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_alignParentTop="true"
+				android:layout_centerHorizontal="true"
+				android:layout_marginTop="20dp"></ImageView>
+		</RelativeLayout>
+	</RelativeLayout>
+
+
+</RelativeLayout>

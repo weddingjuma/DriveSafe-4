@@ -1,0 +1,163 @@
+package com.sunilsahoo.drivesafe.model;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sunilsahoo.drivesafe.utility.Constants;
+import com.sunilsahoo.drivesafe.utility.Utility;
+
+
+public class Profile {
+
+	private DaySettings[] daySettings = new DaySettings[7];
+	private boolean disconnectCall;
+	private String emergencyNo;
+	private List<String> navAppList=null;
+	private long postUsertestAccessTime;
+	private int speedRechckInterval;
+	private float thresholdSpeed;
+	//char interval in sec
+	private int charIntervalMax = 10;
+	//char interval in sec
+	private int charIntervalMin = 1;
+	//char display time in milli seconds
+	private int charPresentTime = 3;
+	//char response time in milli seconds
+	private int charResponseTime = 5;
+	private boolean usertestEnable;
+	private long id = Constants.EOF;
+	private int initTimeInCall = 5; 
+	private int passTimeInCall = 40;
+    private ArrayList<DaySettings> daySettiingsList = null;
+
+	public ArrayList<DaySettings> getDaySettings() {
+		return daySettiingsList;
+	}
+
+    public void setDaySettings(ArrayList<DaySettings> daySettingsList) {
+        this.daySettiingsList = daySettingsList;
+    }
+
+	public String getEmergencyNos() {
+		return emergencyNo;
+	}
+	
+	public List<String> getNavigationAppList(){
+		return navAppList;
+	}
+	
+	public long getPostUsertestAccessTime() {
+		return postUsertestAccessTime;
+	}
+
+	public int getSpeedRechckInterval() {
+		return speedRechckInterval;
+	}
+
+	public float getThresholdSpeed() {
+		return thresholdSpeed;
+	}
+	
+	//char interval in milli seconds
+	public int getCharIntervalMax() {
+		return charIntervalMax * 1000;
+	}
+
+	public int getCharIntervalMin() {
+		return charIntervalMin * 1000;
+	}
+
+	public int getCharPresentTime() {
+		return charPresentTime * 1000;
+	}
+
+	public int getInitTimeInCall() {
+		return initTimeInCall;
+	}
+
+	public int gettestPassTimeInCall() {
+		return passTimeInCall;
+	}
+	
+	
+	public boolean isDisconnectCall() {
+		return disconnectCall;
+	}
+	
+	
+	public boolean isTestEnable() {
+		return usertestEnable;
+	}
+
+	public void setAllDaySettings(DaySettings[] allDaySettings){
+		if(allDaySettings != null){
+			daySettings = allDaySettings;
+		}
+	}
+
+	public void setEmergencyNos(String emergencyNo) {
+		this.emergencyNo = emergencyNo;
+	}
+	
+
+	public void setNavigationAppList(List<String> navAppList){
+		this.navAppList=navAppList;
+	}
+	
+	
+	public void setPostUsertestAccessTime(long postUsertestAccessTime) {
+		this.postUsertestAccessTime = postUsertestAccessTime;
+	}
+
+	public void setSpeedRechckInterval(int speedRechckInterval) {
+		this.speedRechckInterval = speedRechckInterval;
+	}
+
+	public void setThresholdSpeed(float thresholdSpeed) {
+		this.thresholdSpeed = thresholdSpeed;
+	}
+
+
+	public void setCharIntervalMax(int usertestCharIntervalMax) {
+		this.charIntervalMax = usertestCharIntervalMax;
+	}
+
+
+	public void setCharIntervalMin(int usertestCharIntervalMin) {
+		this.charIntervalMin = usertestCharIntervalMin;
+	}
+
+
+	public void setCharPresentTime(int charPresentTimes) {
+		this.charPresentTime = charPresentTimes;
+	}
+	
+	public void setTestEnable(boolean usertestEnable) {
+		this.usertestEnable = usertestEnable;
+	}
+
+	public void setInitTimeInCall(int usertestInitTimeInCall) {
+		this.initTimeInCall = usertestInitTimeInCall;
+	}
+	
+	public void setTestPassTimeInCall(int usertestPassTimeInCall) {
+		this.passTimeInCall = usertestPassTimeInCall;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public int getCharResponseTime() {
+		return charResponseTime * 1000;
+	}
+
+	public void setCharResponseTime(int charResponseTime) {
+		this.charResponseTime = charResponseTime;
+	}
+}

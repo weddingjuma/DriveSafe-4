@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/gradient_background">
+
+	<LinearLayout
+		android:id="@+id/linearLayout2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:orientation="vertical">
+
+		<Button
+			android:id="@+id/btnEmergency1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:background="@drawable/phoneno_selector"
+			android:text="Phone numbers"
+			android:textSize="17sp" />
+
+		<Button
+			android:id="@+id/btnEmergency2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:background="@drawable/phoneno_selector"
+			android:text="Phone numbers"
+			android:textSize="17sp" />
+
+		<Button
+			android:id="@+id/btnEmergency3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:background="@drawable/phoneno_selector"
+			android:text="Phone numbers"
+			android:textSize="17sp" />
+
+	</LinearLayout>
+
+</RelativeLayout>

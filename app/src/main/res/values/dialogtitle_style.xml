@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EmergencyDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@style/EmergencyDialogWindowTitle</item>
+    </style>
+
+    <style name="EmergencyDialogWindowTitle" parent="@android:style/TextAppearance.DialogWindowTitle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">@android:attr/textAppearanceMedium</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+</resources>
