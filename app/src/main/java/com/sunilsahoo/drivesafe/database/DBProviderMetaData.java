@@ -46,7 +46,7 @@ public class DBProviderMetaData {
 		String SPEED_RECHECK_INTERVAL = "spped_recheck_interval";
 		String MAX_SPEED = "max_speed";
 		String EMERGENCY_NOS = "emergency_nos";
-		String POST_USERTEST_TIME = "post_test_time";
+		/*String POST_USERTEST_TIME = "post_test_time";
 		String USERTEST_CHAR_PRESENT_TIME = "char_pres_time";
 		String USERTEST_CHAR_RESPONSE_TIME = "char_resp_time";
 		String USERTEST_CHAR_INTERVAL_MIN = "char_interval_time";
@@ -55,7 +55,7 @@ public class DBProviderMetaData {
 		String USERTEST_INIT_TIME_IN_CALL = "test_init_time_call";
 		String DISCONNECT_CALL = "disconn_call";
 		String USERTEST_ENABLE = "test_enable";
-		String WHITE_LIST_APP = "white_list_app";
+		String WHITE_LIST_APP = "white_list_app";*/
 	}
 	
 	public static final class Report implements ReportColumns {

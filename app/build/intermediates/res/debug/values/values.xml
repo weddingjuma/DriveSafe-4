@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/sunil/Downloads/DriveSafe/app/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/sunil/Projects/Sunil/SafeDrive/DriveSafe/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="profile_header">#0288D1</color>
     <color name="profile_text_color">#555555</color>
     <color name="translucent_back">#20000000</color>
     <color name="white">#ffffff</color>
-    <!-- From: file:/home/sunil/Downloads/DriveSafe/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/sunil/Projects/Sunil/SafeDrive/DriveSafe/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">Drive Safe</string>
     <string name="btn_dismiss_reg_alert">OK</string>
@@ -29,6 +29,7 @@
 		currently.</string>
     <string name="lbl_app_version">Application Version : %1$s</string>
     <string name="lbl_are_u">Are you</string>
+    <string name="lbl_enable_gps">Enable</string>
     <string name="lbl_gps_disabled">Your GPS is disabled! Please enable it to let
 		DriveSafe application
 		work properly.</string>
@@ -39,6 +40,12 @@
     <string name="lbl_radio_btn1">Do not Disturb Mode (No Verification screen but Lock Phone)</string>
     <string name="lbl_radio_btn2">Standard Mode</string>
     <string name="lbl_select_emergency_no">Select the emergency number</string>
+    <string name="lbl_serivce_start_header">Service Running</string>
+    <string name="lbl_serivce_start_msg">DriveSafe Service is running! Click Stop Service to stop working</string>
+    <string name="lbl_serivce_stop_header">Service Stopped</string>
+    <string name="lbl_serivce_stop_msg">DriveSafe Service is stopped! Click Start service to start working</string>
+    <string name="lbl_service_start">Start Service</string>
+    <string name="lbl_service_stop">Stop Service</string>
     <string name="lbl_settings_threshold_speed">Threshold Speed (in KM) :</string>
     <string name="lbl_settings_threshold_speed_hint">Enter Maximum allowed speed</string>
     <string name="lbl_speed_exceed">You are travelling above the
@@ -66,7 +73,7 @@
     <string name="profile_settings_title">Update Profile Details</string>
     <string name="save_btn">Save</string>
     <string name="select_screen_mode">Set Profile Activation Time</string>
-    <!-- From: file:/home/sunil/Downloads/DriveSafe/app/src/main/res/values/dialogtitle_style.xml -->
+    <!-- From: file:/home/sunil/Projects/Sunil/SafeDrive/DriveSafe/app/src/main/res/values/dialogtitle_style.xml -->
     <eat-comment/>
     <style name="EmergencyDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowTitleStyle">@style/EmergencyDialogWindowTitle</item>

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.sunilsahoo.drivesafe.R;
 import com.sunilsahoo.drivesafe.services.MainService;
@@ -17,8 +18,11 @@ public class GPSEnableAlert extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gps_enable_popup);
-		Button btnEnable = (Button) findViewById(R.id.button_enable_gps);
+		setContentView(R.layout.app_status);
+        ((TextView)findViewById(R.id.textView1)).setText(getResources().getString(R.string.lbl_gps_disabled_header));
+        ((TextView)findViewById(R.id.textView2)).setText(getResources().getString(R.string.lbl_gps_disabled));
+		Button btnEnable = (Button) findViewById(R.id.btn1);
+        btnEnable.setText(getResources().getString(R.string.lbl_enable_gps));
 		btnEnable.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {

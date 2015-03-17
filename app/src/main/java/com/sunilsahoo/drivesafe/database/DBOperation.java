@@ -27,7 +27,7 @@ public class DBOperation {
 		initialValues.put(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL, profile.getSpeedRechckInterval());
 		initialValues.put(DBProviderMetaData.Profile.MAX_SPEED, profile.getThresholdSpeed());
 		initialValues.put(DBProviderMetaData.Profile.EMERGENCY_NOS, profile.getEmergencyNos());
-		initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
+		/*initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_PRESENT_TIME, profile.getCharPresentTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_RESPONSE_TIME, profile.getCharResponseTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MIN, profile.getCharIntervalMin());
@@ -37,7 +37,7 @@ public class DBOperation {
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_INIT_TIME_IN_CALL, profile.getInitTimeInCall());
 		initialValues.put(DBProviderMetaData.Profile.DISCONNECT_CALL, profile.isDisconnectCall());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
-		initialValues.put(DBProviderMetaData.Profile.WHITE_LIST_APP, Utility.convertToCommaSeparatedString(profile.getNavigationAppList()));
+		initialValues.put(DBProviderMetaData.Profile.WHITE_LIST_APP, Utility.convertToCommaSeparatedString(profile.getNavigationAppList()));*/
 
 		context.getContentResolver().insert(
 				DBProviderMetaData.Profile.CONTENT_URI, initialValues);
@@ -54,7 +54,7 @@ public class DBOperation {
 		initialValues.put(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL, profile.getSpeedRechckInterval());
 		initialValues.put(DBProviderMetaData.Profile.MAX_SPEED, profile.getThresholdSpeed());
 		initialValues.put(DBProviderMetaData.Profile.EMERGENCY_NOS, profile.getEmergencyNos());
-		initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
+		/*initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_PRESENT_TIME, profile.getCharPresentTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_RESPONSE_TIME, profile.getCharResponseTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MIN, profile.getCharIntervalMin());
@@ -64,8 +64,8 @@ public class DBOperation {
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_INIT_TIME_IN_CALL, profile.getInitTimeInCall());
 		initialValues.put(DBProviderMetaData.Profile.DISCONNECT_CALL, profile.isDisconnectCall());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
-		initialValues.put(DBProviderMetaData.Profile.WHITE_LIST_APP, Utility.convertToCommaSeparatedString(profile.getNavigationAppList()));
-		
+		initialValues.put(DBProviderMetaData.Profile.WHITE_LIST_APP, Utility.convertToCommaSeparatedString(profile.getNavigationAppList()));*/
+
 		Uri uri = ContentUris.withAppendedId(
 					DBProviderMetaData.Profile.CONTENT_URI, profile.getId());
 			context.getContentResolver().update(uri, initialValues, null, null);
@@ -105,8 +105,8 @@ public class DBOperation {
                     .getColumnIndexOrThrow(DBProviderMetaData.Profile.MAX_SPEED)));
             profile.setSpeedRechckInterval(profileDetailCursor.getInt(profileDetailCursor
                     .getColumnIndexOrThrow(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL)));
-            profile.setPostUsertestAccessTime(profileDetailCursor.getInt(profileDetailCursor
-                    .getColumnIndexOrThrow(DBProviderMetaData.Profile.POST_USERTEST_TIME)));
+            /*profile.setPostUsertestAccessTime(profileDetailCursor.getInt(profileDetailCursor
+                    .getColumnIndexOrThrow(DBProviderMetaData.Profile.POST_USERTEST_TIME)));*/
             profile.setId(profileDetailCursor.getInt(profileDetailCursor
                     .getColumnIndexOrThrow(DBProviderMetaData.Profile._ID)));
         }

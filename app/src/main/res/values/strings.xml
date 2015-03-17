@@ -28,6 +28,18 @@
 		DriveSafe application
 		work properly.</string>
     <string name="lbl_gps_disabled_header">GPS Disabled</string>
+    <string name="lbl_enable_gps">Enable</string>
+
+    <string name="lbl_serivce_stop_header">Service Stopped</string>
+    <string name="lbl_serivce_stop_msg">DriveSafe Service is stopped! Click Start service to start working</string>
+    <string name="lbl_service_start">Start Service</string>
+
+    <string name="lbl_serivce_start_header">Service Running</string>
+    <string name="lbl_serivce_start_msg">DriveSafe Service is running! Click Stop Service to stop working</string>
+    <string name="lbl_service_stop">Stop Service</string>
+
+    <string name="toast_service_start">DriveSafe Service Started</string>
+    <string name="toast_service_stop">DriveSafe Service Stopped</string>
 
     <!-- End variables used GPS disabled Alert -->
     <string name="lbl_usertest_disabled">UserTest Disabled.\nYour services will be restored once

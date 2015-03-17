@@ -107,6 +107,7 @@ public class MainService extends Service {
 		} catch (Exception ex) {
 			Log.e(TAG, "Exception in stoping the Service : " + ex.getMessage());
 		}
+        mMainServiceObj = null;
 		super.onDestroy();
 		System.exit(0);
 	}

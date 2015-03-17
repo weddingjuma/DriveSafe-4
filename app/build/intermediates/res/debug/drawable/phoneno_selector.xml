@@ -6,4 +6,4 @@
            android:drawable="@drawable/emergencyno_off" /> <!-- focused -->
      <item android:drawable="@drawable/emergencyno_off" /> <!-- default -->
 
-</selector><!-- From: file:/home/sunil/Downloads/DriveSafe/app/src/main/res/drawable/phoneno_selector.xml -->
+</selector><!-- From: file:/home/sunil/Projects/Sunil/SafeDrive/DriveSafe/app/src/main/res/drawable/phoneno_selector.xml -->
