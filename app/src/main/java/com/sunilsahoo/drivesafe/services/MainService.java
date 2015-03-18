@@ -307,8 +307,7 @@ public class MainService extends Service {
 
 				// Check if the wired or Bluetooth headset is connected or not
 				if (!Utility.isHeadsetConnected(getInstance())
-						&& !isEmergencyNumber
-						&& profile.isDisconnectCall()) {
+						&& !isEmergencyNumber) {
 					Utility.disconnectCall(this);
 				} else {
 					Log.i(TAG, "Head Set connected, call state:" + phoneStatus);
@@ -725,13 +724,10 @@ public class MainService extends Service {
 				// directly lock the screen without showing the speed alert.
 				if (!profile.isTestEnable()) {
 					Profile profile = DBOperation.getProfile(getInstance());
-					String[] apps = Utility.listToArray(profile
-							.getNavigationAppList());
-					if (!Utility.isWhitelistedAppOnTop(apps, this)) {
+
 						if ((callState == TelephonyManager.CALL_STATE_OFFHOOK)
 								&& !Utility.isHeadsetConnected(getInstance())) {
-							if (outgoingNumber != null
-									|| (profile.isDisconnectCall() || mCallDuringEmergency)) {
+							if (outgoingNumber != null || mCallDuringEmergency) {
 								disconnectCall(true, true);
 							}
 						}
@@ -748,7 +744,6 @@ public class MainService extends Service {
 								mTestStatus = TestResultCategory.DISABLED;
 							}
 						}
-					}
 
 				} else {
 					String updatedSpeedToShow = " "
@@ -756,8 +751,7 @@ public class MainService extends Service {
 					if ((callState == TelephonyManager.CALL_STATE_OFFHOOK || callState == TelephonyManager.CALL_STATE_RINGING)
 							&& !Utility.isHeadsetConnected(getInstance())
 							&& !isEmergencyCall()
-							&& (outgoingNumber != null
-									|| profile.isDisconnectCall() || mCallDuringEmergency)) {
+							&& (outgoingNumber != null || mCallDuringEmergency)) {
 
 						if (screenStatus != ScreenState.LOCK) {
 							if (mTestStatus == TestResultCategory.PASSED) {
@@ -805,8 +799,7 @@ public class MainService extends Service {
 						if (callState == TelephonyManager.CALL_STATE_OFFHOOK
 								&& !Utility.isHeadsetConnected(getInstance())
 								&& !isUsertestTimoutRunning()
-								&& (outgoingNumber != null
-										|| profile.isDisconnectCall() || mCallDuringEmergency)
+								&& (outgoingNumber != null || mCallDuringEmergency)
 								&& mTestStatus != TestResultCategory.PASSED) {
 							showCallEndAlertInAdv();
 							startUsertestInitTimeout();
@@ -912,8 +905,7 @@ public class MainService extends Service {
 		if (isUsertestTimoutRunning() || isUsertestInitTimoutRunning()) {
 
 			if (profile != null
-					&& (outgoingNumber != null
-							|| profile.isDisconnectCall() || mCallDuringEmergency)) {
+					&& (outgoingNumber != null || mCallDuringEmergency)) {
 				Log.i(TAG,
 						"Disconnect call :");
 				Utility.disconnectCall(this);
@@ -954,7 +946,7 @@ public class MainService extends Service {
 	public void onUsertestTimout() {
 		Log.d(TAG, "inside onUsertestTimout()");
 		if (profile != null
-				&& (outgoingNumber != null || profile.isDisconnectCall() || mCallDuringEmergency)) {
+				&& (outgoingNumber != null || mCallDuringEmergency)) {
 			Utility.disconnectCall(this);
 		}
 
@@ -1543,22 +1535,7 @@ public class MainService extends Service {
 						.getPhoneCallState(getApplicationContext());
 				if (msg.obj != null && msg.obj instanceof String) {
 					// Show the Speed Alert
-					Profile profile = DBOperation.getProfile(getInstance());
-					String[] apps = Utility.listToArray(profile
-							.getNavigationAppList());
-					if (apps == null) {
-						showSpeedAlert((String) msg.obj);
-					} else if (apps.length > 0) {
-						if ((callState == TelephonyManager.CALL_STATE_OFFHOOK || callState == TelephonyManager.CALL_STATE_RINGING)
-								&& !Utility.isHeadsetConnected(getInstance())
-								&& !isEmergencyCall()) {
-							showSpeedAlert((String) msg.obj);
-						} else if (Utility.isWhitelistedAppOnTop(apps,
-								getApplicationContext()) == false) {
-							showSpeedAlert((String) msg.obj);
-						}
-					} else
-						showSpeedAlert((String) msg.obj);
+					showSpeedAlert((String) msg.obj);
 				}
 				break;
 

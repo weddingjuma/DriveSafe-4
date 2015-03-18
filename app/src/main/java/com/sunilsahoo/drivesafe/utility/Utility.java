@@ -324,31 +324,6 @@ public class Utility {
 		return packageName;
 	}
 
-	public static boolean isWhitelistedAppOnTop(String[] apps, Context context) {
-		Log.d(TAG, "inside isWhitelistedAppOnTop() ");
-		boolean running = false;
-		try {
-			if (apps.length > 0) {
-				ActivityManager am = (ActivityManager) context
-						.getSystemService(Context.ACTIVITY_SERVICE);
-				List<ActivityManager.RunningTaskInfo> rs = am
-						.getRunningTasks(100);
-				ComponentName rsi = rs.get(0).topActivity;
-				for (String packageName : apps) {
-					if (packageName != null) {
-						if (rsi.getPackageName().equalsIgnoreCase(packageName)) {
-							running = true;
-							break;
-						}
-					}
-				}
-			}
-		} catch (Exception ex) {
-			Log.e(TAG, "Exception :" + ex);
-		}
-		return running;
-	}
-
 	public static boolean isKeyguardEnabled(Context context) {
 		try {
 			KeyguardManager kgMgr = (KeyguardManager) context

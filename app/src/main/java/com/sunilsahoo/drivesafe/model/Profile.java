@@ -11,9 +11,7 @@ import com.sunilsahoo.drivesafe.utility.Utility;
 public class Profile {
 
 	private DaySettings[] daySettings = new DaySettings[7];
-	private boolean disconnectCall;
 	private String emergencyNo;
-	private List<String> navAppList=null;
 	private long postUsertestAccessTime;
 	private int speedRechckInterval;
 	private float thresholdSpeed;
@@ -21,9 +19,9 @@ public class Profile {
 	private int charIntervalMax = 10;
 	//char interval in sec
 	private int charIntervalMin = 1;
-	//char display time in milli seconds
+	//char display time in sec
 	private int charPresentTime = 3;
-	//char response time in milli seconds
+	//char response time in sec
 	private int charResponseTime = 5;
 	private boolean usertestEnable;
 	private long id = Constants.EOF;
@@ -43,10 +41,7 @@ public class Profile {
 		return emergencyNo;
 	}
 	
-	public List<String> getNavigationAppList(){
-		return navAppList;
-	}
-	
+
 	public long getPostUsertestAccessTime() {
 		return postUsertestAccessTime;
 	}
@@ -79,12 +74,7 @@ public class Profile {
 	public int gettestPassTimeInCall() {
 		return passTimeInCall;
 	}
-	
-	
-	public boolean isDisconnectCall() {
-		return disconnectCall;
-	}
-	
+
 	
 	public boolean isTestEnable() {
 		return usertestEnable;
@@ -99,13 +89,7 @@ public class Profile {
 	public void setEmergencyNos(String emergencyNo) {
 		this.emergencyNo = emergencyNo;
 	}
-	
 
-	public void setNavigationAppList(List<String> navAppList){
-		this.navAppList=navAppList;
-	}
-	
-	
 	public void setPostUsertestAccessTime(long postUsertestAccessTime) {
 		this.postUsertestAccessTime = postUsertestAccessTime;
 	}
