@@ -13,7 +13,7 @@ import com.sunilsahoo.drivesafe.utility.Utility;
 public class OutgoingCallReceiver extends BroadcastReceiver {
 
 	private static final String TAG = OutgoingCallReceiver.class.getName();
-	private MainService mainService = null;
+
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -22,24 +22,23 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
 		Log.i(TAG, "inside onReceive() - Dialed Number :" + outgoingNumber);
 
 		if (outgoingNumber != null) {
-			mainService = MainService.getInstance();
-			if (mainService == null) {
+			if (MainService.getInstance() == null) {
 				return;
 			}
-			mainService.setOutgoingNo(outgoingNumber);
+            MainService.getInstance().setOutgoingNo(outgoingNumber);
 			// check if the initiated call is emergency call
-			if (mainService.isInitiatingEmergency()) {
-				if (mainService.getEmergencyNos() == null || mainService.getEmergencyNos().length <= 0) {
+			if (MainService.getInstance().isInitiatingEmergency()) {
+				if (MainService.getInstance().getEmergencyNos() == null || MainService.getInstance().getEmergencyNos().length <= 0) {
 					return;
 				}
 				isOutgoingCallMatched = Utility.containsNo(outgoingNumber,
-						mainService.getEmergencyNos());
+                        MainService.getInstance().getEmergencyNos());
 				Log.i(TAG, "isOutgoingCallMatched :" + isOutgoingCallMatched);
 				if (isOutgoingCallMatched) {
 					new Thread() {
 						@Override
 						public void run() {
-							mainService.onEmergency();
+                            MainService.getInstance().onEmergency();
 						}
 					}.start();
 				} else {
@@ -52,7 +51,7 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
 					new Thread() {
 						@Override
 						public void run() {
-							mainService.restoreUsertestScreen();
+                            MainService.getInstance().restoreUsertestScreen();
 						}
 					}.start();
 				}

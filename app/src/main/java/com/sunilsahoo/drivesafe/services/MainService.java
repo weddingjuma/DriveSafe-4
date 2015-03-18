@@ -78,6 +78,7 @@ public class MainService extends Service {
 	@Override
 	public void onCreate() {
 		Log.i(TAG, "Inside onCreate()");
+        mMainServiceObj = this;
 		HandlerThread thread = new HandlerThread("ServiceStartArguments",
 				Process.THREAD_PRIORITY_BACKGROUND);
 		thread.start();
@@ -89,6 +90,7 @@ public class MainService extends Service {
 	@Override
 	public void onDestroy() {
 		try {
+            mMainServiceObj = null;
 			if (mLocationManager != null) {
 				mLocationManager.stopListening();
 			}
@@ -107,9 +109,8 @@ public class MainService extends Service {
 		} catch (Exception ex) {
 			Log.e(TAG, "Exception in stoping the Service : " + ex.getMessage());
 		}
-        mMainServiceObj = null;
+
 		super.onDestroy();
-		System.exit(0);
 	}
 
 	private void processTestScreenMsg() {

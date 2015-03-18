@@ -17,11 +17,8 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 		if (intent.getAction().equals(Intent.ACTION_DATE_CHANGED)
 				|| intent.getAction().equals(Intent.ACTION_TIME_CHANGED)
 				|| intent.getAction().equals(Intent.ACTION_TIMEZONE_CHANGED)) {
-			MainService dsMainService = MainService
-					.getInstance();
-			if (dsMainService != null) {
-				dsMainService.onTimeChangedCallback();
-
+			if (MainService.getInstance() != null) {
+                MainService.getInstance().onTimeChangedCallback();
 			}
 		}
 	}

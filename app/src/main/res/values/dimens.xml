@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="grid_margin_left">32dp</dimen>
+    <dimen name="grid_margin_right">32dp</dimen>
+    <dimen name="footer_height">20dp</dimen>
+    <dimen name="header_margin">5dp</dimen>
+
+    <integer name="column_count">4</integer>
+    <integer name="row_count">3</integer>
+
+    <dimen name="header_spinner_right_margin">5dp</dimen>
+    <dimen name="header_settings_right_margin">5dp</dimen>
+    
+    <dimen name="header_height">38dp</dimen>
+
+    <dimen name="fake_menu_button_min_width">24dp</dimen>
+    <dimen name="actionbar_height">40dp</dimen>
+    <dimen name="actionbar_menu_right_margin">16.3dp</dimen>
+</resources>

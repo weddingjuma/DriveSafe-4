@@ -90,5 +90,7 @@ public class Constants {
     public static final int THRESHOLD_TIME_FOR_REPORT_DELETION = 30;
     //alarm repeat time for report deletion
     public static final int ALARM_REPEAT_TIME_FOR_REPORT_DELETION = 23*60*60*1000;
+
+    public static final int BLUE_TOOTH_CHECK_WAIT_PERIOD = 1;
 	
 }

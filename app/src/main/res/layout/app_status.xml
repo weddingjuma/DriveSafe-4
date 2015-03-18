@@ -2,16 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@drawable/background"
+android:background="@color/background"
 android:orientation="vertical" >
 
-<ImageView
+<RelativeLayout
     android:id="@+id/imageView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:scaleType="fitXY"
-    android:src="@drawable/header" >
-</ImageView>
+    android:background="@color/background">
+    <ImageView
+        android:id="@+id/actionbar_moreBtn"
+        android:layout_width="@dimen/fake_menu_button_min_width"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/actionbar_menu_right_margin"
+        android:baselineAlignBottom="true"
+        android:src="@drawable/btn_action_menu_more"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/actionbar_moreBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/app_name"
+        android:textColor="@color/profile_text_color"
+        android:textSize="18sp"
+        android:gravity="center"/>
+</RelativeLayout>
+
+
 
 <TextView
     android:id="@+id/textView1"

@@ -44,6 +44,7 @@ public class GPSEnableAlert extends Activity {
 
 	@Override
 	public void onBackPressed() {
+        //TODO don't do anything in order to force user not to use back key
 	}
 
 	private void startGPSCheckAtDelay() {

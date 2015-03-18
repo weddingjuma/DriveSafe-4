@@ -19,10 +19,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.i(TAG, "inside onReceive() ");
-		MainService driveSafeController = MainService
-				.getInstance();
 
-		if (driveSafeController == null) {
+		if (MainService.getInstance() == null) {
 			Intent serviceStartIntent = new Intent(context, MainService.class);
 			context.startService(serviceStartIntent);
 			return;
@@ -33,25 +31,25 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (categories != null) {
 			if (categories.contains(
 					Constants.ALARM_USERTEST_PASSED_TIMER)) {
-				driveSafeController.onUsertestAccesTimePassed();
+                MainService.getInstance().onUsertestAccesTimePassed();
 			} else if (categories.contains(
 					Constants.ALARM_EMERGENCY_ACCESS_TIMER)) {
-				driveSafeController.onEmergencyAccessTimePassed();
+                MainService.getInstance().onEmergencyAccessTimePassed();
 			} else if (categories.contains(
 					Constants.ALARM_ENSURE_SERVICE_RUNNING)) {
-				driveSafeController.isServicesRunning();
+                MainService.getInstance().isServicesRunning();
 			} else if (categories.contains(
 					Constants.ALARM_START_SPEED)) {
-				driveSafeController.onSpeedStartRequest();
+                MainService.getInstance().onSpeedStartRequest();
 			} else if (categories.contains(
 					Constants.ALARM_STOP_SPEED)) {
-				driveSafeController.onSpeedStopRequest();
+                MainService.getInstance().onSpeedStopRequest();
 			} else if(categories.contains(Constants.ALARM_DELETE_REPORT)){
                 long minThresholdTime = SystemClock.elapsedRealtime() - Constants.THRESHOLD_TIME_FOR_REPORT_DELETION*1000;
                 DBOperation.deleteReports(context, minThresholdTime);
             }
 		} else {
-			driveSafeController.isServicesRunning();
+            MainService.getInstance().isServicesRunning();
 		}
 	}
 

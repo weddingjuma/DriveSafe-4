@@ -90,4 +90,12 @@
     <string name="lbl_radio_btn2">Standard Mode</string>
 
 
+    <!-- Menu Drawer -->
+    <string-array name="menu_drawer_options">
+        <item>Settings</item>
+        <item>Report</item>
+        <item>Exit</item>
+    </string-array>
+
+
 </resources>

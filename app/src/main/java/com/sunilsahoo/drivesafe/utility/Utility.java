@@ -1,27 +1,19 @@
 package com.sunilsahoo.drivesafe.utility;
 
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -43,7 +35,6 @@ public class Utility {
 	private static char lastChar;
 	private static final Random RANDOM = new Random();
 	private static final char[] SYMBOLS = new char[26];
-	private static TelephonyManager telephony = null;
 	private static ITelephony iTelephony = null;
 
 	static {
@@ -62,20 +53,6 @@ public class Utility {
 		}
 	}
 
-	public static void deactivateAdmin(Context context) {
-		Log.i(TAG, "inside deactivateAdmin()");
-		DevicePolicyManager lockDPM;
-		ComponentName mDeviceAdminSample;
-		lockDPM = (DevicePolicyManager) context
-				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		mDeviceAdminSample = new ComponentName(context,
-				DeviceLockStatusReceiver.class);
-		boolean active = lockDPM.isAdminActive(mDeviceAdminSample);
-
-		if (active) {
-			lockDPM.removeActiveAdmin(mDeviceAdminSample);
-		}
-	}
 
 	/**
 	 * Call this method to only activate this application as device
@@ -94,31 +71,6 @@ public class Utility {
 		lockIntent.putExtra(Constants.INTENT_LOCK_PERMISSION, true);
 		context.startActivity(lockIntent);
 
-	}
-
-	public static String getAppVersion(Context context) {
-		String versionName = "";
-		try {
-			String pkg = context.getPackageName();
-			versionName = context.getPackageManager().getPackageInfo(pkg, 0).versionName;
-		} catch (NameNotFoundException e) {
-			versionName = "";
-		}
-		return versionName;
-	}
-
-	/**
-	 * 
-	 * @return - The current device time in yyyy-MM-dd HH:mm:ss format
-	 */
-	public static String getCurrentTime() {
-		String date = "";
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			date = sdf.format(new Date());
-		} catch (Exception e) {
-		}
-		return date;
 	}
 
 	public static ArrayList<String> getInstalledPackages(String intentAction,
@@ -177,9 +129,9 @@ public class Utility {
 			ConnectivityManager cm = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo[] networks = cm.getAllNetworkInfo();
-			for (int i = 0; i < networks.length; i++) {
-				if (networks[i].getType() == ConnectivityManager.TYPE_MOBILE) {
-					if (networks[i].isAvailable()) {
+			for (NetworkInfo network : networks) {
+				if (network.getType() == ConnectivityManager.TYPE_MOBILE) {
+					if (network.isAvailable()) {
 						mobileNetworkAvailable = true;
 					}
 				}
@@ -198,21 +150,17 @@ public class Utility {
 
 	public static void lockScreen(Context context) {
 		Log.i(TAG, "inside lockScreen()");
-		DevicePolicyManager policyMgr = null;
-		ComponentName cm = null;
 		boolean active;
 
-		policyMgr = (DevicePolicyManager) context
+        DevicePolicyManager policyMgr = (DevicePolicyManager) context
 				.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		cm = new ComponentName(context, DeviceLockStatusReceiver.class);
+        ComponentName cm = new ComponentName(context, DeviceLockStatusReceiver.class);
 		active = policyMgr.isAdminActive(cm);
 
 		if (!active) {
 			policyMgr.lockNow();
-			MainService dsMainService = MainService
-					.getInstance();
-			if (dsMainService != null) {
-				dsMainService.onScreenLock();
+			if (MainService.getInstance() != null) {
+                MainService.getInstance().onScreenLock();
 			}
 		} else {
 			Intent lockIntent = new Intent(context, DeviceAdminScreen.class);
@@ -244,7 +192,7 @@ public class Utility {
 	}
 
 	public static int nextCharInterval(final int minTime, final int maxTime) {
-		int randomDuration = 0;
+		int randomDuration;
 		if (minTime >= maxTime) {
 			randomDuration = maxTime;
 		} else {
@@ -255,79 +203,6 @@ public class Utility {
 		return randomDuration;
 	}
 
-	/**
-	 * Show a popup dialog before making the device screen locked for a short
-	 * time and will be dismissed automatically
-	 * 
-	 * @param title
-	 * @param message
-	 * @param buttonText
-	 * @param iconId
-	 * @param context
-	 */
-	public static void showDeviceLockDialog(String title, String message,
-			String buttonText, int iconId, final Activity context) {
-		try {
-			AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-			alertDialog.setTitle(title);
-			alertDialog.setMessage(message);
-
-			String buttonLabel = "OK";
-			if (buttonText != null && buttonText.trim().length() > 0) {
-				buttonLabel = buttonText;
-			}
-			alertDialog.setButton(buttonLabel,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							if (dialog != null) {
-								dialog.dismiss();
-
-							}
-						}
-					});
-			alertDialog.setIcon(iconId);
-
-			alertDialog.setOnDismissListener(new OnDismissListener() {
-
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					lockScreen(context);
-				}
-			});
-
-			alertDialog.setOnCancelListener(new OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					lockScreen(context);
-				}
-			});
-
-			// Show the alert dialog
-			alertDialog.show();
-			// Start the timer for waiting after displaying the alert.
-			dismissDialogAtDelay(alertDialog);
-			// alertDialog.dismiss();
-
-		} catch (Exception e) {
-			Log.e(TAG, "Error in showing Lock Button; " + e.toString());
-		}
-
-	}
-
-	private static void dismissDialogAtDelay(final AlertDialog alertDialog) {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(Constants.WAITING_PERIOD_BEFORE_LOCKING * 1000);
-					alertDialog.dismiss();
-				} catch (Exception e) {
-					Log.e(TAG, "Error in startTimer:" + e.toString());
-				}
-			}
-		}.start();
-	}
 
 	/**
 	 * disconnects incoming call
@@ -343,56 +218,21 @@ public class Utility {
 			iTelephony.endCall();
 			Log.d(TAG, "call disconnected");
 		} catch (Exception e) {
-			Log.e(TAG, "Exception while disconnection call :"
-					+ e);
+			Log.e(TAG, "Exception in disconnectCall() :" + e);
 		}
 	}
 
 	public static void initializeTelephony(Context context) {
-		telephony = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
 		try {
+            TelephonyManager telephony = (TelephonyManager) context
+                    .getSystemService(Context.TELEPHONY_SERVICE);
 			Class cls = Class.forName(telephony.getClass().getName());
 			Method m = cls.getDeclaredMethod("getITelephony");
 			m.setAccessible(true);
 			iTelephony = ((ITelephony) m.invoke(telephony));
 		} catch (Exception e) {
-			Log.e(TAG, "FATAL ERROR: could not connect to telephony subsystem"
-					+ e);
+			Log.e(TAG, "Exception in initializeTelephony() :" + e);
 		}
-	}
-
-	public static String getDayOfMonthSuffix(final int n) {
-		if (n < 1 || n > 31) {
-			return "";
-		}
-		if (n >= 11 && n <= 13) {
-			return "th";
-		}
-		switch (n % 10) {
-		case 1:
-			return "st";
-		case 2:
-			return "nd";
-		case 3:
-			return "rd";
-		default:
-			return "th";
-		}
-	}
-
-	public static String convertToCommaSeparatedString(List<String> list) {
-		if (list == null) {
-			return "";
-		}
-		StringBuilder commaSepValueBuilder = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			commaSepValueBuilder.append(list.get(i));
-			if (i != list.size() - 1) {
-				commaSepValueBuilder.append(", ");
-			}
-		}
-		return commaSepValueBuilder.toString();
 	}
 
 	public static String[] listToArray(List<String> list) {
@@ -409,7 +249,7 @@ public class Utility {
 			if (callState == TelephonyManager.CALL_STATE_OFFHOOK) {
 				try
 				{
-					Thread.sleep(1000);
+					Thread.sleep(Constants.BLUE_TOOTH_CHECK_WAIT_PERIOD * 1000);
 				} catch (Exception ie) {
 				}
 				if (BlueToothHeadsetStateChangeReceiver.getHeadsetAudioState() == 1) {
@@ -446,25 +286,6 @@ public class Utility {
 	}
 
 	/**
-	 * format "19:16, 16th Oct 2014"
-	 * 
-	 * @return
-	 */
-	public static String getDateTime() {
-		Calendar calendar = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		String currentTime = sdf.format(calendar.getTime());
-		int day = calendar.get(Calendar.DAY_OF_MONTH);
-		String dayWithSuffix = day + Utility.getDayOfMonthSuffix(day);
-		sdf.applyPattern("MMM yyyy");
-		String currentMonthYear = sdf.format(calendar.getTime());
-		String dateNTime = currentTime + ", " + dayWithSuffix + " "
-				+ currentMonthYear + ",";
-		Log.i(TAG, "Date and Time:" + dateNTime);
-		return dateNTime;
-	}
-
-	/**
 	 * Sets the device time settings to automatic.
 	 */
 	public static void setTimeAutomatic(Context context) {
@@ -473,8 +294,7 @@ public class Utility {
 					context.getContentResolver(),
 					android.provider.Settings.System.AUTO_TIME, Constants.TRUE);
 		} catch (Exception ex) {
-			Log.w(TAG,
-					"Exception in setTimeAutomatic(): " + ex.getMessage());
+			Log.w(TAG, "Exception in setTimeAutomatic() : " + ex);
 		}
 	}
 
@@ -484,7 +304,7 @@ public class Utility {
 					context.getContentResolver(),
 					android.provider.Settings.System.AUTO_TIME) == Constants.TRUE;
 		} catch (Exception ex) {
-			Log.w(TAG, "Exception in isTimeAutomatic() : " + ex.getMessage());
+			Log.w(TAG, "Exception in isTimeAutomatic() : " + ex);
 			return false;
 		}
 	}
@@ -497,8 +317,8 @@ public class Utility {
 					.getSystemService(Context.ACTIVITY_SERVICE))
 					.getRunningTasks(1);
 			packageName = taskInfo.get(0).topActivity.getPackageName();
-		} catch (Exception e) {
-			Log.e(TAG, "Error in checking top package name :" + e.toString());
+		} catch (Exception ex) {
+			Log.e(TAG, "Exception in checking top package name :" + ex);
 		}
 
 		return packageName;
@@ -523,8 +343,8 @@ public class Utility {
 					}
 				}
 			}
-		} catch (Exception e) {
-			Log.e(TAG, "Exception :" + e.getMessage());
+		} catch (Exception ex) {
+			Log.e(TAG, "Exception :" + ex);
 		}
 		return running;
 	}
@@ -592,7 +412,7 @@ public class Utility {
         long time = timeInMillisecond/1000;
         int hour = (int)(time/(60*60));
         int minute = (int)((time - hour *60*60)/60);
-        int seconds = (int)(time - hour *60*60 - minute *60);
+//        int seconds = (int)(time - hour *60*60 - minute *60);
         return String.format("%02d", hour)+":"+String.format("%02d", minute);
     }
 
@@ -603,27 +423,4 @@ public class Utility {
         return ((hour <= Constants.MAX_HOUR) && (minute <= Constants.MAX_MIN));
     }
 
-
-    public static int getDayIndex(String day) {
-        if (day == null) {
-            return Constants.EOF;
-        }
-        int index = Constants.EOF;
-
-        for (int i = 0; i < Constants.WEEKDAYS.length; i++) {
-            if(Constants.WEEKDAYS[i].equalsIgnoreCase(day)){
-                index = i;
-            }
-        }
-        return index;
-
-    }
-
-    /*if((Integer.parseInt(arr[0]) > Constants.MAX_HOUR) || (Integer.parseInt(arr[1]) > Constants.MAX_MIN)){
-        arr[0] = String.valueOf(Math.min(Integer.parseInt(arr[0]), Constants.MAX_HOUR));
-        arr[1] = String.valueOf(Math.min(Integer.parseInt(arr[1]), Constants.MAX_MIN));
-        edittext.setText(arr[0]+":"+arr[1]);
-    }else{
-        edittext.setText(cashAmountBuilder.toString());
-    }*/
 }
