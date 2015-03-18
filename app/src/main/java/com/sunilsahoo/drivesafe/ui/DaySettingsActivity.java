@@ -2,6 +2,7 @@ package com.sunilsahoo.drivesafe.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,6 +23,7 @@ import com.sunilsahoo.drivesafe.utility.Utility;
  * Created by sunil on 18/2/15.
  */
 public class DaySettingsActivity extends Activity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener{
+    private static final String TAG = DaySettingsActivity.class.getName();
     private ListView daySettingsLV = null;
     private EditText startTime0 = null;
     private EditText startTime1 = null;
@@ -68,7 +70,7 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.daysettings);
         boolean isEnabled = false;
-        Profile profile = DBOperation.getProfile(this);
+        profile = DBOperation.getProfile(this);
         startTime0 = (EditText) findViewById(R.id.startTimeET0);
         startTime0.addTextChangedListener(new TimeFilterWatcher(startTime0));
         startTime0.setText(String.valueOf(Utility.formatTime(profile.getDaySettings().get(0).getStartTime())));
@@ -114,7 +116,9 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
         stopTime6.setText(String.valueOf(Utility.formatTime(profile.getDaySettings().get(6).getStopTime())));
 
         emergencyNumberET = (EditText) findViewById(R.id.emergencyNumberET);
+        emergencyNumberET.setText(profile.getEmergencyNos());
         speedET = (EditText) findViewById(R.id.speedET);
+        speedET.setText(String.valueOf(profile.getThresholdSpeed()));
 
 
         enableCB0 = (CheckBox) findViewById(R.id.enableCB0);
@@ -341,6 +345,7 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
                 finish();
 
             }catch(Exception ex){
+                Log.d(TAG, "Exception ex :"+ex);
 
             }
         }

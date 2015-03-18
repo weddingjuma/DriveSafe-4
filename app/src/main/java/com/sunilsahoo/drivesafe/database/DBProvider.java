@@ -178,6 +178,14 @@ public class DBProvider extends ContentProvider {
 
 
 
+        private static final String SQL_QUERY_INSERT_PROFILE =
+                "INSERT INTO " + Profile.TABLE_NAME + " ( "
+                        + Profile.SPEED_RECHECK_INTERVAL + ","+
+                        Profile.MAX_SPEED + ") VALUES ("
+                        + 10 +","
+                        + 40 +")";
+
+
         private static final String SQL_QUERY_INSERT_DAY_SETTINGS_0 =
                 "INSERT INTO " + DBProviderMetaData.DaySettings.TABLE_NAME + " ( "
                         + DBProviderMetaData.DaySettings.DAY + ","+
@@ -268,6 +276,7 @@ public class DBProvider extends ContentProvider {
 			db.execSQL(SQL_QUERY_CREATE_DAYSETTINGS);
 			db.execSQL(SQL_QUERY_CREATE_ITEMS);
 			db.execSQL(SQL_QUERY_CREATE_CATEGORY);
+            db.execSQL(SQL_QUERY_INSERT_PROFILE);
             //insert default values of day settings in db
             db.execSQL(SQL_QUERY_INSERT_DAY_SETTINGS_0);
             db.execSQL(SQL_QUERY_INSERT_DAY_SETTINGS_1);

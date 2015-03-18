@@ -4,6 +4,7 @@
 	<color name="white">#ffffff</color>
     <color name="background">#0288D1</color>
     <color name="profile_text_color">#ffffff</color>
+    <color name="profile_text_color_et">#000000</color>
     <color name="profile_header_text_color">#555555</color>
 
 </resources>

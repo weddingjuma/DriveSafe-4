@@ -89,9 +89,11 @@
                         android:layout_marginRight="1dp"
                         android:hint="@string/lbl_settings_threshold_speed_hint"
                         android:textSize="14sp"
-                        android:textColor="@color/profile_text_color"
+                        android:textColor="@color/profile_text_color_et"
                         android:textColorHint="@color/profile_text_color"
-                        android:id="@+id/speedET"/>
+                        android:id="@+id/speedET"
+                        android:inputType="number"
+                        />
                 </TableRow>
 
                 <TableRow>
@@ -114,9 +116,10 @@
                         android:layout_marginRight="1dp"
                         android:hint="@string/emergency_number_hint"
                         android:textSize="14sp"
-                        android:textColor="@color/profile_text_color"
+                        android:textColor="@color/profile_text_color_et"
                         android:textColorHint="@color/profile_text_color"
-                        android:id="@+id/emergencyNumberET"/>
+                        android:id="@+id/emergencyNumberET"
+                        android:inputType="number"/>
                 </TableRow>
 
 
@@ -211,7 +214,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET0"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -222,7 +225,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET0"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
@@ -257,7 +260,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET1"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -268,7 +271,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET1"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
@@ -303,7 +306,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET2"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -314,7 +317,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET2"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
@@ -351,7 +354,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET3"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -362,7 +365,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET3"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
@@ -399,7 +402,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET4"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -410,7 +413,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET4"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
@@ -446,7 +449,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET5"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -457,7 +460,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET5"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
@@ -492,7 +495,7 @@
                         android:gravity="center"
                         android:id="@+id/startTimeET6"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <EditText
                         android:layout_height="match_parent"
@@ -503,7 +506,7 @@
                         android:gravity="center"
                         android:id="@+id/endTimeET6"
                         android:inputType="number"
-                        android:textColor="@color/profile_text_color"/>
+                        android:textColor="@color/profile_text_color_et"/>
 
                     <CheckBox
                         android:layout_height="match_parent"
