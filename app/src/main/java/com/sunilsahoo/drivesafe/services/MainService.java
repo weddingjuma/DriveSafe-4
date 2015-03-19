@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.sunilsahoo.drivesafe.R;
 import com.sunilsahoo.drivesafe.database.DBOperation;
-import com.sunilsahoo.drivesafe.database.DBProviderMetaData;
 import com.sunilsahoo.drivesafe.listener.AlarmReceiver;
 import com.sunilsahoo.drivesafe.listener.CustomLocationManager;
 import com.sunilsahoo.drivesafe.listener.CustomPhoneStateListener;
@@ -84,6 +83,7 @@ public class MainService extends Service {
 		thread.start();
 		mServiceLooper = thread.getLooper();
 		mServiceHandler = new ServiceHandler(mServiceLooper);
+        profile = DBOperation.getProfile(this);
 		startListeners();
 	}
 
@@ -107,7 +107,7 @@ public class MainService extends Service {
 			}
 
 		} catch (Exception ex) {
-			Log.e(TAG, "Exception in stoping the Service : " + ex.getMessage());
+			Log.e(TAG, "Exception in stopping the Service : " + ex.getMessage());
 		}
 
 		super.onDestroy();
@@ -125,7 +125,7 @@ public class MainService extends Service {
 			boolean checkHeadset) {
 
 		if (!checkHeadset
-				|| !Utility.isHeadsetConnected(getInstance())) {
+				|| !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())) {
 			disconnectCall = true;
 			sendCallEndMsg = sendMsg;
 			new Thread() {
@@ -145,16 +145,12 @@ public class MainService extends Service {
 	/**
 	 * checks whether services are running
 	 */
-	public void isServicesRunning() {
-		Log.i(TAG, "inside isServicesRunning()");
-		boolean shouldDetectSpeed = isCapableToDetectSpeed();
+	public void startSpeedListener() {
+        boolean shouldDetectSpeed = isCapableToDetectSpeed();
+		Log.i(TAG, "inside startSpeedListener() shouldDetectSpeed -:"+shouldDetectSpeed);
 		if (shouldDetectSpeed) {
 			if (mLocationManager == null) {
 				mLocationManager = CustomLocationManager.getInstance(this);
-				if (profile != null) {
-					mLocationManager.setSpeedUpdateInterval(profile
-							.getSpeedRechckInterval());
-				}
 			}
 			if (!mLocationManager.isListeningSpeed()) {
 				sendMsgToServiceHandler(MessageType.START_SPEED_LISTENING, null);
@@ -217,7 +213,7 @@ public class MainService extends Service {
 	}
 
 	private boolean isUsertestTimoutRunning() {
-		if (checkTestTimoutThread != null && checkTestTimoutThread.isAlive()) {
+		if ((checkTestTimoutThread != null) && (checkTestTimoutThread.isAlive())) {
 			return true;
 		}
 		return false;
@@ -226,10 +222,6 @@ public class MainService extends Service {
 	private void registerSpeedListener() {
 		if (mLocationManager == null) {
 			mLocationManager = CustomLocationManager.getInstance(this);
-			if (profile != null) {
-				mLocationManager.setSpeedUpdateInterval(profile
-						.getSpeedRechckInterval());
-			}
 		}
 
 		if (isCapableToDetectSpeed()) {
@@ -244,7 +236,7 @@ public class MainService extends Service {
 	 * @param requestID
 	 * @param info
 	 */
-	private void sendMsgToServiceHandler(int requestID, String info) {
+	public void sendMsgToServiceHandler(int requestID, String info) {
 		Log.i(TAG, "inside sendMsgToServiceHandler() - requestID: " + requestID);
 		if (mServiceHandler.hasMessages(requestID)) {
 			mServiceHandler.removeMessages(requestID);
@@ -297,6 +289,9 @@ public class MainService extends Service {
 			TelephonyManager tm = (TelephonyManager) getApplicationContext()
 					.getSystemService(Context.TELEPHONY_SERVICE);
 			int phoneStatus = tm.getCallState();
+            /*if(!profile.isTestEnable()){
+                mTestStatus = TestResultCategory.DISABLED;
+            }*/
 			Log.i(TAG, "UserTest Status:" + mTestStatus);
 			boolean isEmergencyNumber = Utility.containsNo(incomingNumber,
 					profile.getEmergencyNos());
@@ -306,7 +301,7 @@ public class MainService extends Service {
 					|| mTestStatus == TestResultCategory.FAILED) {
 
 				// Check if the wired or Bluetooth headset is connected or not
-				if (!Utility.isHeadsetConnected(getInstance())
+				if (!Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())
 						&& !isEmergencyNumber) {
 					Utility.disconnectCall(this);
 				} else {
@@ -329,29 +324,7 @@ public class MainService extends Service {
 				if (isEmergencyCallInProgress && !isEmergencyNumber) {
 					mCallDuringEmergency = true;
 				}
-
-				// Check if the speed listener should run or or not and then
-				// check if it
-				// is already running or not. If not running
-				// then start speed listener, because we have to ensure that
-				// user should not be able to continue with the call if the
-				// device is moving above threshold speed.
-				boolean shouldDetectSpeed = isCapableToDetectSpeed();
-				if (shouldDetectSpeed) {
-					if (mLocationManager == null) {
-						mLocationManager = CustomLocationManager
-								.getInstance(mMainServiceObj);
-						if (profile != null) {
-							mLocationManager.setSpeedUpdateInterval(profile
-									.getSpeedRechckInterval());
-						}
-					}
-					if (!mLocationManager.isListeningSpeed()) {
-						sendMsgToServiceHandler(
-								MessageType.START_SPEED_LISTENING,
-								null);
-					}
-				}
+                startSpeedListener();
 
 			}
 		}
@@ -418,29 +391,6 @@ public class MainService extends Service {
 		if (!isEmergencyCallInProgress) {
 			verifySpeedListener();
 		}
-	}
-
-	/**
-	 * This method will be called when the user has selected enabled button from
-	 * GPS Disable Alert
-	 * Screen ( {@link GPSEnableAlert} )
-	 */
-	public void onGpsEnableSelected() {
-		new Thread() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(Constants.TIMEOUT_PERIOD_FOR_GPS_ENABLE * 1000);
-					if ((mLocationManager != null)
-							&& mLocationManager.isGPSProviderDisabled()) {
-						sendMsgToServiceHandler(MessageType.GPS_ENABLE_TIMEOUT,
-								null);
-					}
-				} catch (Exception e) {
-
-				}
-			}
-		}.start();
 	}
 
 	private void onGpsEnableTimeout() {
@@ -555,20 +505,8 @@ public class MainService extends Service {
 
 			boolean shouldDetectSpeed = isCapableToDetectSpeed();
 			if (shouldDetectSpeed) {
-				if (mLocationManager == null) {
-					mLocationManager = CustomLocationManager
-							.getInstance(mMainServiceObj);
-					if (profile != null) {
-						mLocationManager.setSpeedUpdateInterval(profile
-								.getSpeedRechckInterval());
-					}
-				}
-				if (!mLocationManager.isListeningSpeed()) {
-					sendMsgToServiceHandler(MessageType.START_SPEED_LISTENING,
-							null);
-				}
-
-				else if (mLocationManager.isGPSProviderDisabled()) {
+				startSpeedListener();
+				if (mLocationManager.isGPSProviderDisabled()) {
 					Log.i(TAG, "Showing GPS Enable Alert after receiving call");
 					sendMsgToServiceHandler(MessageType.GPS_DISABLE, null);
 				}
@@ -632,10 +570,6 @@ public class MainService extends Service {
 					if (mLocationManager == null) {
 						mLocationManager = CustomLocationManager
 								.getInstance(mMainServiceObj);
-						if (profile != null) {
-							mLocationManager.setSpeedUpdateInterval(profile
-									.getSpeedRechckInterval());
-						}
 					}
 					if (mLocationManager.isGPSProviderDisabled()
 							|| !mLocationManager.isListeningSpeed()) {
@@ -701,18 +635,21 @@ public class MainService extends Service {
 		verifySpeedListener();
 	}
 
-	public void onSpeedUpdate(final float updateSpeed) {
+	public void onSpeedUpdate() {
 
 		if (profile == null) {
 			return;
 		}
 
-		float currentSpeed = updateSpeed;
 		// Checking & converting unit of speed from Mps into (Mph or Kph)
-		currentSpeed = (float) (2.236936 * currentSpeed);
+//		currentSpeed = (float) (2.236936 * currentSpeed);
+        float currentSpeed = 0.0f;
+        if(CustomLocationManager.getLocation() != null){
+            currentSpeed = CustomLocationManager.getLocation().getSpeed();
+        }
 		Log.i(TAG,
 				"Updated speed is :" + currentSpeed
-						+ " Mph \r\nCurrent config speed:"
+						+ " KMph \r\nCurrent config speed:"
 						+ profile.getThresholdSpeed()
 						+ " usertestStatus:"
 						+ mTestStatus);
@@ -723,10 +660,9 @@ public class MainService extends Service {
 				// Check if the usertest is enabled or not, if not then
 				// directly lock the screen without showing the speed alert.
 				if (!profile.isTestEnable()) {
-					Profile profile = DBOperation.getProfile(getInstance());
 
 						if ((callState == TelephonyManager.CALL_STATE_OFFHOOK)
-								&& !Utility.isHeadsetConnected(getInstance())) {
+								&& !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())) {
 							if (outgoingNumber != null || mCallDuringEmergency) {
 								disconnectCall(true, true);
 							}
@@ -749,7 +685,7 @@ public class MainService extends Service {
 					String updatedSpeedToShow = " "
 							+ profile.getThresholdSpeed();
 					if ((callState == TelephonyManager.CALL_STATE_OFFHOOK || callState == TelephonyManager.CALL_STATE_RINGING)
-							&& !Utility.isHeadsetConnected(getInstance())
+							&& !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())
 							&& !isEmergencyCall()
 							&& (outgoingNumber != null || mCallDuringEmergency)) {
 
@@ -797,7 +733,7 @@ public class MainService extends Service {
 						}
 
 						if (callState == TelephonyManager.CALL_STATE_OFFHOOK
-								&& !Utility.isHeadsetConnected(getInstance())
+								&& !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())
 								&& !isUsertestTimoutRunning()
 								&& (outgoingNumber != null || mCallDuringEmergency)
 								&& mTestStatus != TestResultCategory.PASSED) {
@@ -1011,12 +947,10 @@ public class MainService extends Service {
 		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		Intent notificationIntent = new Intent(Constants.ACTION_CALL_DISCONNECT_NOTIFIC);
 		Notification notification = new Notification(R.drawable.icon, getString(R.string.msg_status_tickertext), System.currentTimeMillis());
-		CharSequence notificText = getString(R.string.msg_status_notification);
-		CharSequence notificTitle = getString(R.string.msg_status_title);
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 				notificationIntent, 0);
 
-		notification.setLatestEventInfo(this, notificTitle, notificText, pendingIntent);
+		notification.setLatestEventInfo(this, getString(R.string.msg_status_title), getString(R.string.msg_status_notification), pendingIntent);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		notification.defaults |= Notification.DEFAULT_SOUND;
 
@@ -1318,9 +1252,7 @@ public class MainService extends Service {
 			@Override
 			public void run() {
 				try {
-					long usertestInitTime = Constants.EOF;
-					Profile profile = DBOperation.getProfile(getInstance());
-					usertestInitTime = profile
+					long usertestInitTime = profile
 							.getInitTimeInCall();
 					if (usertestInitTime != Constants.EOF) {
 						// Wait for the UserTest pass Time
@@ -1360,9 +1292,7 @@ public class MainService extends Service {
 			@Override
 			public void run() {
 				try {
-					long usertestPassTime = Constants.EOF;
-					Profile profile = DBOperation.getProfile(getInstance());
-					usertestPassTime = profile
+					long usertestPassTime = profile
 							.gettestPassTimeInCall();
 					if (usertestPassTime != Constants.EOF) {
 						// Wait for the UserTest pass Time
@@ -1407,11 +1337,6 @@ public class MainService extends Service {
 
 			if (mLocationManager == null) {
 				mLocationManager = CustomLocationManager.getInstance(this);
-
-				if (profile != null) {
-					mLocationManager.setSpeedUpdateInterval(profile
-							.getSpeedRechckInterval());
-				}
 			}
 			// start the speed manager if it is not listening the speed already.
 			if (!mLocationManager.isListeningSpeed()) {
@@ -1531,8 +1456,6 @@ public class MainService extends Service {
 				break;
 
 			case MessageType.SPEED_EXCEED:
-				int callState = Utility
-						.getPhoneCallState(getApplicationContext());
 				if (msg.obj != null && msg.obj instanceof String) {
 					// Show the Speed Alert
 					showSpeedAlert((String) msg.obj);
@@ -1593,6 +1516,10 @@ public class MainService extends Service {
 					Utility.ensurelockPermission(getInstance());
 				}
 				break;
+
+            case MessageType.UPDATE_PROFILE:
+                profile = DBOperation.getProfile(mMainServiceObj);
+                break;
 
 			default:
 				Log.d(TAG, "un-handled case ");

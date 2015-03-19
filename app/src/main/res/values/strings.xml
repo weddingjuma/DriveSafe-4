@@ -78,9 +78,12 @@
     <string name="save_btn">Save</string>
     <string name="cancel_btn">Cancel</string>
     <string name="day_settings_update_success">Updated Day Settings</string>
+    <string name="day_settings_update_failure">Problem in Updating Profile. Try again later</string>
     <string name="invalid_time">Invalid Time - time range is 00:00 - 23:59 </string>
 
     <string name="lbl_settings_threshold_speed">Threshold Speed (in KM) :</string>
+    <string name="lbl_settings_captcha_screen">Show Captcha (Disable to auto-disconnect call)</string>
+    <string name="lbl_settings_headset">Enable Headset Mode (Enable to allow call using headset)</string>
     <string name="lbl_settings_threshold_speed_hint">Enter Maximum allowed speed</string>
     <string name="emergency_number">Emergency Numbers (separated by comma) :</string>
     <string name="emergency_number_hint">Enter Emergency Numbers</string>

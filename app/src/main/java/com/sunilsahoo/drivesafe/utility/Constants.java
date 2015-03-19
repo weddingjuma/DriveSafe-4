@@ -17,8 +17,6 @@ public class Constants {
 		int ERROR = Constants.EOF;
 	}
 
-	public static final String[] WEEKDAYS = { "Sunday", "Monday", "Tuesday",
-			"Wednesday", "Thursday", "Friday", "Saturday" };
 
 	public static final String EXTRA_STATE = "android.bluetooth.headset.extra.STATE";
 	public static final String ACTION_HEADSET_STATE_CHANGED = "android.bluetooth.headset.action.STATE_CHANGED";
@@ -58,8 +56,6 @@ public class Constants {
 	public static final String INTENT_LOCK_PERMISSION = "ENSURE_LOCK_PERMISSION";
 	public static final int NOTIFIC_STATUS_ID = "com.sunilsahoo.drivesafe.Status_Notification_Alert"
 			.hashCode();
-	// waiting period before locking in seconds
-	public static final int WAITING_PERIOD_BEFORE_LOCKING = 3;
 	// timeout period for gps enable in seconds
 	public static final int TIMEOUT_PERIOD_FOR_GPS_ENABLE = 10;
 	// access time for emergency number is 180 seconds ie 3 minutes
@@ -86,8 +82,8 @@ public class Constants {
     public static final int MAX_HOUR = 23;
     public static final int MAX_MIN = 59;
     public static final int MIN_MIN = 0;
-    //minimum thrshold time for report deletion in days
-    public static final int THRESHOLD_TIME_FOR_REPORT_DELETION = 30;
+    //minimum thrshold time for report deletion in seconds
+    public static final int THRESHOLD_TIME_FOR_REPORT_DELETION = 30*24*60*60;
     //alarm repeat time for report deletion
     public static final int ALARM_REPEAT_TIME_FOR_REPORT_DELETION = 23*60*60*1000;
 

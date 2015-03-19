@@ -69,6 +69,50 @@
                 android:id="@+id/profile_settings"
                 android:layout_alignParentTop="true">
 
+
+                <TableRow>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:text="@string/lbl_settings_captcha_screen"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/profile_text_color"/>
+                <CheckBox
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:gravity="center"
+                    android:id="@+id/captchaEnable" />
+                </TableRow>
+
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:text="@string/lbl_settings_headset"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/profile_text_color"/>
+                    <CheckBox
+                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:gravity="center"
+                        android:id="@+id/headsetModeEnable" />
+                </TableRow>
+
                 <TableRow>
 
                     <TextView

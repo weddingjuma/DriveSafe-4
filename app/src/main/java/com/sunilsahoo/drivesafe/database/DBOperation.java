@@ -21,27 +21,27 @@ public class DBOperation {
 
     private static final String TAG = DBOperation.class.getName();
 
-    public static void insertProfile(com.sunilsahoo.drivesafe.model.Profile profile, Context context) {
-		context = context == null ? MainService.getInstance() : context;
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL, profile.getSpeedRechckInterval());
-		initialValues.put(DBProviderMetaData.Profile.MAX_SPEED, profile.getThresholdSpeed());
-		initialValues.put(DBProviderMetaData.Profile.EMERGENCY_NOS, profile.getEmergencyNos());
-		/*initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_PRESENT_TIME, profile.getCharPresentTime());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_RESPONSE_TIME, profile.getCharResponseTime());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MIN, profile.getCharIntervalMin());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MAX, profile.getCharIntervalMax());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_PASS_TIME_IN_CALL, profile.gettestPassTimeInCall());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_INIT_TIME_IN_CALL, profile.getInitTimeInCall());
-		initialValues.put(DBProviderMetaData.Profile.DISCONNECT_CALL, profile.isDisconnectCall());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
-		initialValues.put(DBProviderMetaData.Profile.WHITE_LIST_APP, Utility.convertToCommaSeparatedString(profile.getNavigationAppList()));*/
-
-		context.getContentResolver().insert(
-				DBProviderMetaData.Profile.CONTENT_URI, initialValues);
-	}
+//    public static void insertProfile(com.sunilsahoo.drivesafe.model.Profile profile, Context context) {
+//		context = context == null ? MainService.getInstance() : context;
+//		ContentValues initialValues = new ContentValues();
+//		initialValues.put(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL, profile.getSpeedRechckInterval());
+//		initialValues.put(DBProviderMetaData.Profile.MAX_SPEED, profile.getThresholdSpeed());
+//		initialValues.put(DBProviderMetaData.Profile.EMERGENCY_NOS, profile.getEmergencyNos());
+//		/*initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_PRESENT_TIME, profile.getCharPresentTime());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_RESPONSE_TIME, profile.getCharResponseTime());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MIN, profile.getCharIntervalMin());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MAX, profile.getCharIntervalMax());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_PASS_TIME_IN_CALL, profile.gettestPassTimeInCall());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_INIT_TIME_IN_CALL, profile.getInitTimeInCall());
+//		initialValues.put(DBProviderMetaData.Profile.DISCONNECT_CALL, profile.isDisconnectCall());
+//		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
+//		initialValues.put(DBProviderMetaData.Profile.WHITE_LIST_APP, Utility.convertToCommaSeparatedString(profile.getNavigationAppList()));*/
+//
+//		context.getContentResolver().insert(
+//				DBProviderMetaData.Profile.CONTENT_URI, initialValues);
+//	}
 
 	public static void updateProfile(com.sunilsahoo.drivesafe.model.Profile profile, Context context) throws Exception{
 		context = context == null ? MainService.getInstance() : context;
@@ -54,12 +54,14 @@ public class DBOperation {
 		initialValues.put(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL, profile.getSpeedRechckInterval());
 		initialValues.put(DBProviderMetaData.Profile.MAX_SPEED, profile.getThresholdSpeed());
 		initialValues.put(DBProviderMetaData.Profile.EMERGENCY_NOS, profile.getEmergencyNos());
+        initialValues.put(DBProviderMetaData.Profile.CAPTCHA_ENABLE, profile.isTestEnable());
+        initialValues.put(DBProviderMetaData.Profile.ALLOW_HEADSET, profile.isHeadsetConnectionAllowed());
+
 		/*initialValues.put(DBProviderMetaData.Profile.POST_USERTEST_TIME, profile.getPostUsertestAccessTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_PRESENT_TIME, profile.getCharPresentTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_RESPONSE_TIME, profile.getCharResponseTime());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MIN, profile.getCharIntervalMin());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_CHAR_INTERVAL_MAX, profile.getCharIntervalMax());
-		initialValues.put(DBProviderMetaData.Profile.USERTEST_ENABLE, profile.isTestEnable());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_PASS_TIME_IN_CALL, profile.gettestPassTimeInCall());
 		initialValues.put(DBProviderMetaData.Profile.USERTEST_INIT_TIME_IN_CALL, profile.getInitTimeInCall());
 		initialValues.put(DBProviderMetaData.Profile.DISCONNECT_CALL, profile.isDisconnectCall());
@@ -105,8 +107,10 @@ public class DBOperation {
                     .getColumnIndexOrThrow(DBProviderMetaData.Profile.MAX_SPEED)));
             profile.setSpeedRechckInterval(profileDetailCursor.getInt(profileDetailCursor
                     .getColumnIndexOrThrow(DBProviderMetaData.Profile.SPEED_RECHECK_INTERVAL)));
-            /*profile.setPostUsertestAccessTime(profileDetailCursor.getInt(profileDetailCursor
-                    .getColumnIndexOrThrow(DBProviderMetaData.Profile.POST_USERTEST_TIME)));*/
+            profile.setTestEnable(profileDetailCursor.getInt(profileDetailCursor
+                    .getColumnIndexOrThrow(DBProviderMetaData.Profile.CAPTCHA_ENABLE)) == Constants.TRUE);
+            profile.setHeadsetConnectionAllowed(profileDetailCursor.getInt(profileDetailCursor
+                    .getColumnIndexOrThrow(DBProviderMetaData.Profile.ALLOW_HEADSET)) == Constants.TRUE);
             profile.setId(profileDetailCursor.getInt(profileDetailCursor
                     .getColumnIndexOrThrow(DBProviderMetaData.Profile._ID)));
         }
@@ -115,7 +119,7 @@ public class DBOperation {
 	}
 
 
-	private static void insertDaySettings(com.sunilsahoo.drivesafe.model.DaySettings daySettings, Context context) throws Exception{
+	/*private static void insertDaySettings(com.sunilsahoo.drivesafe.model.DaySettings daySettings, Context context) throws Exception{
 		context = context == null ? MainService.getInstance() : context;
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(DBProviderMetaData.DaySettings.DAY,
@@ -129,13 +133,12 @@ public class DBOperation {
 
 		context.getContentResolver().insert(
 				DBProviderMetaData.DaySettings.CONTENT_URI, initialValues);
-	}
+	}*/
 
 	private static void updateDaysettings(com.sunilsahoo.drivesafe.model.DaySettings daySettings, Context context) throws Exception{
 		context = context == null ? MainService.getInstance() : context;
 		ContentValues initialValues = new ContentValues();
-		/*initialValues.put(DBProviderMetaData.DaySettings.DAY,
-				daySettings.getDay());*/
+
 		initialValues.put(DBProviderMetaData.DaySettings.START_TIME,
 				daySettings.getStartTime());
 		initialValues.put(DBProviderMetaData.DaySettings.STOP_TIME,
@@ -151,14 +154,14 @@ public class DBOperation {
 	}
 	
 
-	public static void deleteDaySettings(com.sunilsahoo.drivesafe.model.DaySettings daySettings, Context context, boolean deleteFromMappingTable) throws Exception{
+	/*public static void deleteDaySettings(com.sunilsahoo.drivesafe.model.DaySettings daySettings, Context context, boolean deleteFromMappingTable) throws Exception{
 		if (daySettings.getId() != Constants.EOF) {
 			Uri uri = ContentUris.withAppendedId(
 					DBProviderMetaData.DaySettings.CONTENT_URI,
 					daySettings.getId());
 			context.getContentResolver().delete(uri, null, null);
 		} 
-	}
+	}*/
 	
 	public static void insertReport(com.sunilsahoo.drivesafe.model.Report report, Context context) {
 		context = context == null ? MainService.getInstance() : context;
@@ -210,23 +213,6 @@ public class DBOperation {
         return daySettingList;
     }
 
-	public static void updateCategory(com.sunilsahoo.drivesafe.model.Report report, Context context) {
-		context = context == null ? MainService.getInstance() : context;
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(DBProviderMetaData.Report.TYPE,
-				report.getReportType());
-		initialValues.put(DBProviderMetaData.Report.VALUE,
-				report.getReportValue());
-		initialValues.put(DBProviderMetaData.Report.VALUE,
-				report.getTime());
-		if (report.getId() != Constants.EOF) {
-			Uri uri = ContentUris.withAppendedId(
-					DBProviderMetaData.Report.CONTENT_URI,
-					report.getId());
-			context.getContentResolver().update(uri, initialValues, null, null);
-		} 
-	}
-	
 	public static int deleteReport(
 			com.sunilsahoo.drivesafe.model.Report report, Context context) {
 		context = context == null ? MainService.getInstance() : context;

@@ -29,9 +29,9 @@ public class CustomLocationManager {
 	private boolean listeningSpeed;
 
 	private ProviderStatusCheckerThread providerStatusListener = null;
-	private int updateInterval = Constants.SPEED_RECHECK_INTERVAL;
 	private LocationManager locationManager = null;
 	private SpeedListener speedListener = null;
+    private static Location currentLocation = null;
 
 	class SpeedListener implements LocationListener {
 
@@ -60,9 +60,10 @@ public class CustomLocationManager {
 		public void onLocationChanged(Location location) {
 			Log.i(TAG, "updateLocation() Latitude:" + " Speed :"
 					+ location.getSpeed());
+            currentLocation = location;
 			lastUpdateTime = System.currentTimeMillis();
 			currGPSStatus = LocationProvider.AVAILABLE;
-			dsMainService.onSpeedUpdate(location.getSpeed());
+			dsMainService.onSpeedUpdate();
 		}
 
 		@Override
@@ -106,10 +107,6 @@ public class CustomLocationManager {
 		return false;
 	}
 
-	public void setSpeedUpdateInterval(int updateInterval) {
-		this.updateInterval = updateInterval;
-	}
-
 	private void startProviderStatusCheck() {
 		stopProviderStatusCheck();
 		providerStatusListener = new ProviderStatusCheckerThread();
@@ -117,8 +114,8 @@ public class CustomLocationManager {
 	}
 
 	public void startSpeedListening() {
-		Log.i(TAG, "inside startSpeedListening()");
 		stopListening();
+        Log.i(TAG, "inside startSpeedListening()");
 		try {
 			locationManager = (LocationManager) appContext
 					.getSystemService(Context.LOCATION_SERVICE);
@@ -130,11 +127,11 @@ public class CustomLocationManager {
 			speedListener = new SpeedListener();
 			locationManager.requestLocationUpdates(
 					LocationManager.GPS_PROVIDER,
-					updateInterval * 1000L, 0, speedListener);
+                    Constants.SPEED_RECHECK_INTERVAL * 1000L, 0, speedListener);
 			// Start checking the Location Provider status,
 			startProviderStatusCheck();
 			listeningSpeed = true;
-
+            Log.i(TAG, "speed check started");
 		} catch (Exception e) {
 			Log.e(TAG, "Exception :"+ e.getMessage());
 		}
@@ -184,7 +181,7 @@ public class CustomLocationManager {
 					if (currGPSStatus == LocationProvider.TEMPORARILY_UNAVAILABLE
 							&& !isGPSProviderDisabled()) {
 						long curTime = System.currentTimeMillis();
-						if ((curTime - lastUpdateTime) > ((updateInterval + 10) * 1000L)) {
+						if ((curTime - lastUpdateTime) > ((Constants.SPEED_RECHECK_INTERVAL + 10) * 1000L)) {
 							dsMainService.requestRestartSpeedListener();
 							break;
 						}
@@ -200,4 +197,8 @@ public class CustomLocationManager {
 			running = false;
 		}
 	}
+
+    public static Location getLocation(){
+        return currentLocation;
+    }
 }

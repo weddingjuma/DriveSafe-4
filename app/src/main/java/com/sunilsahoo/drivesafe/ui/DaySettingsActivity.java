@@ -16,6 +16,8 @@ import com.sunilsahoo.drivesafe.R;
 import com.sunilsahoo.drivesafe.database.DBOperation;
 import com.sunilsahoo.drivesafe.listener.TimeFilterWatcher;
 import com.sunilsahoo.drivesafe.model.Profile;
+import com.sunilsahoo.drivesafe.services.MainService;
+import com.sunilsahoo.drivesafe.utility.MessageType;
 import com.sunilsahoo.drivesafe.utility.Utility;
 
 
@@ -58,6 +60,8 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
     private CheckBox enableCB4 = null;
     private CheckBox enableCB5 = null;
     private CheckBox enableCB6 = null;
+    private CheckBox captchaEnableCB = null;
+    private CheckBox headsetModeEnableCB = null;
 
     private ImageView saveBtn = null;
     private ImageView cancelBtn = null;
@@ -128,6 +132,13 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
         startTime0.setEnabled(isEnabled);
         stopTime0.setEnabled(isEnabled);
 
+        captchaEnableCB = (CheckBox) findViewById(R.id.captchaEnable);
+        captchaEnableCB.setOnCheckedChangeListener(this);
+        captchaEnableCB.setChecked(profile.isTestEnable());
+
+        headsetModeEnableCB = (CheckBox) findViewById(R.id.headsetModeEnable);
+        headsetModeEnableCB.setOnCheckedChangeListener(this);
+        headsetModeEnableCB.setChecked(profile.isHeadsetConnectionAllowed());
 
         enableCB1 = (CheckBox) findViewById(R.id.enableCB1);
         enableCB1.setOnCheckedChangeListener(this);
@@ -222,6 +233,9 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
             finish();
         }else if(view == saveBtn){
             try {
+                profile.setTestEnable(captchaEnableCB.isChecked());
+                profile.setHeadsetConnectionAllowed(headsetModeEnableCB.isChecked());
+
                 profile.getDaySettings().get(0).setStartTime(Utility.timeInMilliSecond(startTime0.getText().toString()));
                 profile.getDaySettings().get(0).setStopTime(Utility.timeInMilliSecond(stopTime0.getText().toString()));
                 profile.getDaySettings().get(0).setEnabled(enableCB0.isChecked());
@@ -320,18 +334,6 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
                     return;
                 }
 
-                /*for(DaySettings daySettings : profile.getDaySettings()){
-                    if(!Utility.validateTime(daySettings.getStartTime())){
-                        startTime0.setError(getString(R.string.invalid_time));
-                        valid = false;
-                    }
-                    if(!Utility.validateTime(daySettings.getStopTime())){
-                        stopTime0.setError(getString(R.string.invalid_time));
-                        valid = false;
-                    }
-                    DBOperation.updateDaysettings(daySettings, this);
-                }*/
-
                 try {
                     profile.setThresholdSpeed(Float.parseFloat(speedET.getText().toString()));
                 }catch(Exception ex){
@@ -339,14 +341,15 @@ public class DaySettingsActivity extends Activity implements CompoundButton.OnCh
                 }
 
                 profile.setEmergencyNos(emergencyNumberET.getText().toString());
-
                 DBOperation.updateProfile(profile, this);
+                if(MainService.getInstance() != null) {
+                    MainService.getInstance().sendMsgToServiceHandler(MessageType.UPDATE_PROFILE, null);
+                }
                 Toast.makeText(this,getResources().getString(R.string.day_settings_update_success), Toast.LENGTH_SHORT).show();
                 finish();
-
             }catch(Exception ex){
                 Log.d(TAG, "Exception ex :"+ex);
-
+                Toast.makeText(this,getResources().getString(R.string.day_settings_update_failure), Toast.LENGTH_LONG).show();
             }
         }
     }

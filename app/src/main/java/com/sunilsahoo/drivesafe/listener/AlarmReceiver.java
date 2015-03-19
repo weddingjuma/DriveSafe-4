@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 MainService.getInstance().onEmergencyAccessTimePassed();
 			} else if (categories.contains(
 					Constants.ALARM_ENSURE_SERVICE_RUNNING)) {
-                MainService.getInstance().isServicesRunning();
+                MainService.getInstance().startSpeedListener();
 			} else if (categories.contains(
 					Constants.ALARM_START_SPEED)) {
                 MainService.getInstance().onSpeedStartRequest();
@@ -49,7 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 DBOperation.deleteReports(context, minThresholdTime);
             }
 		} else {
-            MainService.getInstance().isServicesRunning();
+            MainService.getInstance().startSpeedListener();
 		}
 	}
 

@@ -87,6 +87,10 @@ public class DBProvider extends ContentProvider {
 				ProfileColumns.MAX_SPEED);
 		sItemsProjectionMap.put(ProfileColumns.EMERGENCY_NOS,
 				ProfileColumns.EMERGENCY_NOS);
+        sItemsProjectionMap.put(ProfileColumns.CAPTCHA_ENABLE,
+                ProfileColumns.CAPTCHA_ENABLE);
+        sItemsProjectionMap.put(ProfileColumns.ALLOW_HEADSET,
+                ProfileColumns.ALLOW_HEADSET);
 		/*sItemsProjectionMap.put(ProfileColumns.POST_USERTEST_TIME,
 				ProfileColumns.POST_USERTEST_TIME);
 		sItemsProjectionMap.put(ProfileColumns.USERTEST_CHAR_PRESENT_TIME,
@@ -103,8 +107,6 @@ public class DBProvider extends ContentProvider {
 				ProfileColumns.USERTEST_INIT_TIME_IN_CALL);
 		sItemsProjectionMap.put(ProfileColumns.DISCONNECT_CALL,
 				ProfileColumns.DISCONNECT_CALL);
-		sItemsProjectionMap.put(ProfileColumns.USERTEST_ENABLE,
-				ProfileColumns.USERTEST_ENABLE);
 		sItemsProjectionMap.put(ProfileColumns.WHITE_LIST_APP,
 				ProfileColumns.WHITE_LIST_APP);*/
 
@@ -127,6 +129,10 @@ public class DBProvider extends ContentProvider {
 				+ " TEXT, "
 				+ Profile.MAX_SPEED
 				+ " TEXT, "
+                + Profile.CAPTCHA_ENABLE
+                + " INTEGER ,"
+                + Profile.ALLOW_HEADSET
+                + " INTEGER ,"
 				+ Profile.EMERGENCY_NOS
 				/*+ " TEXT, "
 				+ Profile.POST_USERTEST_TIME
@@ -144,8 +150,6 @@ public class DBProvider extends ContentProvider {
 				+ Profile.USERTEST_INIT_TIME_IN_CALL
 				+ " INTEGER ,"
 				+ Profile.DISCONNECT_CALL
-				+ " INTEGER ,"
-				+ Profile.USERTEST_ENABLE
 				+ " INTEGER ,"
 				+ Profile.WHITE_LIST_APP*/
 				+ " TEXT );";
@@ -180,9 +184,13 @@ public class DBProvider extends ContentProvider {
 
         private static final String SQL_QUERY_INSERT_PROFILE =
                 "INSERT INTO " + Profile.TABLE_NAME + " ( "
-                        + Profile.SPEED_RECHECK_INTERVAL + ","+
-                        Profile.MAX_SPEED + ") VALUES ("
+                        + Profile.SPEED_RECHECK_INTERVAL + ","
+                        + Profile.CAPTCHA_ENABLE+ ","
+                        + Profile.ALLOW_HEADSET+ ","
+                        +Profile.MAX_SPEED + ") VALUES ("
                         + 10 +","
+                        + 0 +","
+                        + 0 +","
                         + 40 +")";
 
 

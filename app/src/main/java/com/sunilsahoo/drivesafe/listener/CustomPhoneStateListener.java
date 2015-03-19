@@ -12,25 +12,23 @@ public class CustomPhoneStateListener extends PhoneStateListener {
 	@Override
 	public void onCallStateChanged(int state, String incomingNumber) {
 		Log.d(TAG, "inside onCallStateChanged() state :" + state);
-		MainService dsMainService = MainService.getInstance();
-		Log.d(TAG, "dsMainService :" + dsMainService);
-		if (dsMainService == null) {
+		if (MainService.getInstance() == null) {
 			return;
 		}
 		try {
 			switch (state) {
 			case TelephonyManager.CALL_STATE_RINGING:
-				dsMainService.setIncomingNo(incomingNumber);
-				dsMainService.onCallReceived(incomingNumber);
+                MainService.getInstance().setIncomingNo(incomingNumber);
+                MainService.getInstance().onCallReceived(incomingNumber);
 				break;
 			case TelephonyManager.CALL_STATE_IDLE:
-				dsMainService.onCallDisconnected();
-				dsMainService.setIncomingNo(null);
-				dsMainService.setOutgoingNo(null);
+                MainService.getInstance().onCallDisconnected();
+                MainService.getInstance().setIncomingNo(null);
+                MainService.getInstance().setOutgoingNo(null);
 				break;
 
 			case TelephonyManager.CALL_STATE_OFFHOOK:
-				dsMainService.onOutgoingCallReceived();
+                MainService.getInstance().onOutgoingCallReceived();
 				break;
 
 			default:

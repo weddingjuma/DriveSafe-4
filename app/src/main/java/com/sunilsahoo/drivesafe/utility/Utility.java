@@ -271,13 +271,13 @@ public class Utility {
 		}
 	}
 
-	public static boolean isHeadsetConnected(Context context) {
+	public static boolean isHeadsetConnected(Context context, boolean isAllowHeadset) {
 		try {
 			AudioManager audioManager = (AudioManager) context
 					.getSystemService(Context.AUDIO_SERVICE);
-			if ((audioManager != null && audioManager.isWiredHeadsetOn())
+			if (isAllowHeadset && ((audioManager != null && audioManager.isWiredHeadsetOn())
 					|| Utility.checkForBluetoothAudio(Utility
-							.getPhoneCallState(context))) {
+							.getPhoneCallState(context)))) {
 				return true;
 			}
 		} catch (Exception ex) {

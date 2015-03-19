@@ -15,6 +15,7 @@ public interface MessageType {
 	int STOP_SPEED_LISTENING = 1012;
 	int START_USERTEST_IN_CALL = 1013;
 	int CANCEL_NOTIFCATION = 1014;
+    int UPDATE_PROFILE = 1015;
 
 	// Msg Constants for UI	
 	int UI_INSERT_CHAR = 2001;

@@ -10,10 +10,10 @@ import com.sunilsahoo.drivesafe.utility.Utility;
 
 public class Profile {
 
-	private DaySettings[] daySettings = new DaySettings[7];
 	private String emergencyNo;
 	private long postUsertestAccessTime;
 	private int speedRechckInterval;
+    private boolean isHeadsetConnectionAllowed = false;
 	private float thresholdSpeed;
 	//char interval in sec
 	private int charIntervalMax = 10;
@@ -80,12 +80,6 @@ public class Profile {
 		return usertestEnable;
 	}
 
-	public void setAllDaySettings(DaySettings[] allDaySettings){
-		if(allDaySettings != null){
-			daySettings = allDaySettings;
-		}
-	}
-
 	public void setEmergencyNos(String emergencyNo) {
 		this.emergencyNo = emergencyNo;
 	}
@@ -144,4 +138,12 @@ public class Profile {
 	public void setCharResponseTime(int charResponseTime) {
 		this.charResponseTime = charResponseTime;
 	}
+
+    public boolean isHeadsetConnectionAllowed() {
+        return isHeadsetConnectionAllowed;
+    }
+
+    public void setHeadsetConnectionAllowed(boolean isHeadsetConnectionAllowed) {
+        this.isHeadsetConnectionAllowed = isHeadsetConnectionAllowed;
+    }
 }
