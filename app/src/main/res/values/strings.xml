@@ -68,6 +68,7 @@
     <string name="lbl_select_emergency_no">Select the emergency number</string>
     <string name="btn_done">Done</string>
     <string name="btn_emergency_call"><b>Emergency Call</b></string>
+    <string name="last_detected_speed">Latest Detected Speed : %1$s KM/hour</string>
 
     <string name="day_settings_day_label">Day</string>
     <string name="day_settings_starttime_label">Start Time</string>

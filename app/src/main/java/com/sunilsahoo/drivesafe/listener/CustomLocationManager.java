@@ -6,12 +6,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.sunilsahoo.drivesafe.database.DBOperation;
 import com.sunilsahoo.drivesafe.model.Report;
 import com.sunilsahoo.drivesafe.services.MainService;
 import com.sunilsahoo.drivesafe.utility.Constants;
+import com.sunilsahoo.drivesafe.utility.Log;
 import com.sunilsahoo.drivesafe.utility.ReportType;
 
 public class CustomLocationManager {
@@ -133,7 +133,7 @@ public class CustomLocationManager {
 			listeningSpeed = true;
             Log.i(TAG, "speed check started");
 		} catch (Exception e) {
-			Log.e(TAG, "Exception :"+ e.getMessage());
+			Log.e(TAG, "Exception in startSpeedListening :"+ e.getMessage());
 		}
 
 	}
@@ -146,8 +146,8 @@ public class CustomLocationManager {
 				providerStatusListener.interrupt();
 			}
 			providerStatusListener = null;
-		} catch (Exception e) {
-
+		} catch (Exception ex) {
+            Log.i(TAG, "Exception in stopProviderStatusCheck() :" + ex);
 		}
 	}
 
@@ -165,7 +165,7 @@ public class CustomLocationManager {
 			stopProviderStatusCheck();
 			listeningSpeed = false;
 		} catch (Exception ex) {
-			Log.i(TAG, "Exception in stopListening() :" + ex.getMessage());
+			Log.i(TAG, "Exception in stopListening() :" + ex);
 		}
 	}
 
@@ -189,7 +189,7 @@ public class CustomLocationManager {
 					Thread.sleep(Constants.TIMEOUT_PERIOD_FOR_GPS_ENABLE * 1000);
 				}
 			} catch (Exception e) {
-				Log.e(TAG, "Exception " + e.toString());
+				Log.e(TAG, "Exception in provider status check :" + e);
 			}
 		}
 

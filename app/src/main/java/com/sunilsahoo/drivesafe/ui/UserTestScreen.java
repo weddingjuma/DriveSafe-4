@@ -263,7 +263,7 @@ public class UserTestScreen extends Activity implements OnKeyListener,
 				&& !forceStop) {
 
 			if (MainService.getInstance() != null
-					&& !MainService.getInstance().isCallInProgress()) {
+					&& !MainService.getInstance().isHandleCall()) {
 				isRunning = false;
 				MainService.getInstance().onUsertestFailed(
 						TestResultCategory.PAUSED);

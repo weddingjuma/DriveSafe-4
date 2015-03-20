@@ -16,15 +16,17 @@ import com.sunilsahoo.drivesafe.R;
 import com.sunilsahoo.drivesafe.services.MainService;
 
 public class LauncherScreen extends Activity implements OnClickListener {
-	private Button startServiceBtn;
+    private static final String TAG = LauncherScreen.class.getName();
+    private Button startServiceBtn;
     private String headerStr = "";
     private String msgStr = "";
     private String btnStr = "";
     private ImageView actionbar_moreIV = null;
-
+    private static LauncherScreen launcherScreen= null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        launcherScreen = this;
 		setContentView(R.layout.app_status);
 		startServiceBtn = (Button) findViewById(R.id.btn1);
 		startServiceBtn.setOnClickListener(this);
@@ -78,6 +80,18 @@ public class LauncherScreen extends Activity implements OnClickListener {
         ((TextView)findViewById(R.id.textView1)).setText(headerStr);
         ((TextView)findViewById(R.id.textView2)).setText(msgStr);
         startServiceBtn.setText(btnStr);
+    }
+
+    public static LauncherScreen getInstance(){
+        return launcherScreen;
+    }
+    public void updateSpeed(String speed){
+        try {
+            String title = String.format(getString(R.string.last_detected_speed), speed);
+            ((TextView) findViewById(R.id.textView3)).setText(title);
+        }catch(Exception ex){
+            Log.w(TAG, "Exception :"+ex);
+        }
     }
 
 

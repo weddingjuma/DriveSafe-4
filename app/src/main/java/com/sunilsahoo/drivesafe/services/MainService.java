@@ -22,7 +22,6 @@ import android.os.SystemClock;
 import android.os.Vibrator;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.sunilsahoo.drivesafe.R;
@@ -35,9 +34,11 @@ import com.sunilsahoo.drivesafe.model.DaySettings;
 import com.sunilsahoo.drivesafe.model.Profile;
 import com.sunilsahoo.drivesafe.model.Report;
 import com.sunilsahoo.drivesafe.ui.GPSEnableAlert;
+import com.sunilsahoo.drivesafe.ui.LauncherScreen;
 import com.sunilsahoo.drivesafe.ui.UserTestResultAlert;
 import com.sunilsahoo.drivesafe.ui.UserTestScreen;
 import com.sunilsahoo.drivesafe.utility.Constants;
+import com.sunilsahoo.drivesafe.utility.Log;
 import com.sunilsahoo.drivesafe.utility.MessageType;
 import com.sunilsahoo.drivesafe.utility.ScreenState;
 import com.sunilsahoo.drivesafe.utility.TestResultCategory;
@@ -50,7 +51,7 @@ public class MainService extends Service {
 	private boolean mCallDuringEmergency = false;
 	private boolean isStartSpeedDetect = false;
 	private boolean disconnectCall = false;
-	private boolean isCallInProgress = false;
+	private boolean handleCall = false;
 	private boolean isEmergencyCallInitiated = false;
 	private boolean isEmergencyCallInProgress = false;
 	private boolean onUsertestPassedTime = false;
@@ -91,15 +92,12 @@ public class MainService extends Service {
 	public void onDestroy() {
 		try {
             mMainServiceObj = null;
-			if (mLocationManager != null) {
-				mLocationManager.stopListening();
-			}
-			// unregister phone change listener
-			unRegisterPhoneStateChangeListener();
+            // unregister phone change listener
+            unRegisterPhoneStateChangeListener();
+            // unregister speed check listener
+            unRegisterSpeedListener();
 			// Stop Screen Lock Listening
-			if (mScreenLockChangeReceiver != null) {
-				unregisterReceiver(mScreenLockChangeReceiver);
-			}
+            unRegisterScreenLockStatusChangeReceiver();
 			if (mServiceLooper != null) {
 				mServiceLooper.quit();
 				mServiceLooper.getThread().interrupt();
@@ -145,7 +143,7 @@ public class MainService extends Service {
 	/**
 	 * checks whether services are running
 	 */
-	public void startSpeedListener() {
+	public boolean startSpeedListener() {
         boolean shouldDetectSpeed = isCapableToDetectSpeed();
 		Log.i(TAG, "inside startSpeedListener() shouldDetectSpeed -:"+shouldDetectSpeed);
 		if (shouldDetectSpeed) {
@@ -154,9 +152,10 @@ public class MainService extends Service {
 			}
 			if (!mLocationManager.isListeningSpeed()) {
 				sendMsgToServiceHandler(MessageType.START_SPEED_LISTENING, null);
+                return true;
 			}
 		}
-
+        return false;
 	}
 
 	public void initializeEmergencyState() {
@@ -184,8 +183,8 @@ public class MainService extends Service {
 		return isEmergency;
 	}
 
-	public boolean isCallInProgress() {
-		return isCallInProgress;
+	public boolean isHandleCall() {
+		return handleCall;
 	}
 
 	public boolean isInitiatingEmergency() {
@@ -224,11 +223,20 @@ public class MainService extends Service {
 			mLocationManager = CustomLocationManager.getInstance(this);
 		}
 
+        Log.i(TAG, "isCapableToDetectSpeed :"+isCapableToDetectSpeed());
 		if (isCapableToDetectSpeed()) {
 			sendMsgToServiceHandler(MessageType.START_SPEED_LISTENING, null);
 		}
 		performDaySettings();
 	}
+
+
+    private void unRegisterSpeedListener() {
+        if (mLocationManager != null) {
+            mLocationManager.stopListening();
+            mLocationManager = null;
+        }
+    }
 
 	/**
 	 * sends message to service handler
@@ -237,7 +245,10 @@ public class MainService extends Service {
 	 * @param info
 	 */
 	public void sendMsgToServiceHandler(int requestID, String info) {
-		Log.i(TAG, "inside sendMsgToServiceHandler() - requestID: " + requestID);
+		Log.i(TAG, "inside sendMsgToServiceHandler() - requestID: " + requestID+" mServiceHandler :"+mServiceHandler);
+        if(mServiceHandler == null){
+            return;
+        }
 		if (mServiceHandler.hasMessages(requestID)) {
 			mServiceHandler.removeMessages(requestID);
 		}
@@ -262,7 +273,7 @@ public class MainService extends Service {
 	 * that the screen is off.
 	 */
 	public void onCallDisconnected() {
-		isCallInProgress = false;
+		handleCall = false;
 		mCallDuringEmergency = false;
 		AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		audioManager.setSpeakerphoneOn(false);
@@ -284,25 +295,22 @@ public class MainService extends Service {
 
 	public void onCallReceived(String incomingNumber) {
 		Log.i(TAG, "Call Coming from:" + incomingNumber);
-		isCallInProgress = true;
+		handleCall = true;
 		if (incomingNumber != null && profile != null) {
 			TelephonyManager tm = (TelephonyManager) getApplicationContext()
 					.getSystemService(Context.TELEPHONY_SERVICE);
 			int phoneStatus = tm.getCallState();
-            /*if(!profile.isTestEnable()){
-                mTestStatus = TestResultCategory.DISABLED;
-            }*/
 			Log.i(TAG, "UserTest Status:" + mTestStatus);
 			boolean isEmergencyNumber = Utility.containsNo(incomingNumber,
 					profile.getEmergencyNos());
-
+            boolean disconnectCall = !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())
+                    && !isEmergencyNumber;
 			if (mTestStatus == TestResultCategory.SCREEN
 					|| mTestStatus == TestResultCategory.DISABLED
 					|| mTestStatus == TestResultCategory.FAILED) {
 
 				// Check if the wired or Bluetooth headset is connected or not
-				if (!Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())
-						&& !isEmergencyNumber) {
+				if (disconnectCall) {
 					Utility.disconnectCall(this);
 				} else {
 					Log.i(TAG, "Head Set connected, call state:" + phoneStatus);
@@ -311,21 +319,24 @@ public class MainService extends Service {
 					// if the
 					// call is received.
 					if (phoneStatus == TelephonyManager.CALL_STATE_OFFHOOK) {
-						isCallInProgress = false;
+						handleCall = false;
 					}
 				}
 
 			} else {
 				Log.i(TAG, "Usertest screen not shown.");
-				isCallInProgress = false;
+
 				// Check if this call is coming during emergency free access
 				// time, if so then make a flag true which will later be used to
 				// disconnect this call.
 				if (isEmergencyCallInProgress && !isEmergencyNumber) {
 					mCallDuringEmergency = true;
 				}
-                startSpeedListener();
-
+                handleCall = false;
+                boolean startSpeedSuccess = startSpeedListener();
+                if(!startSpeedSuccess){
+                    onSpeedUpdate();
+                }
 			}
 		}
 	}
@@ -454,7 +465,7 @@ public class MainService extends Service {
 
 		Log.i(TAG, "isEmergencyNumber :" + isEmergencyNumber
 				+ "disconnectCall :" + disconnectCall + " handlingCall :"
-				+ isCallInProgress);
+				+ handleCall);
 
 		if (disconnectCall) {
 			disconnectCall = false;
@@ -487,8 +498,8 @@ public class MainService extends Service {
 			// answered.
 			if (incomingNumber != null
 					&& phoneStatus == TelephonyManager.CALL_STATE_OFFHOOK
-					&& isCallInProgress) {
-				isCallInProgress = false;
+					&& handleCall) {
+				handleCall = false;
 
 				displayTestScreenOnTop();
 			}
@@ -641,8 +652,6 @@ public class MainService extends Service {
 			return;
 		}
 
-		// Checking & converting unit of speed from Mps into (Mph or Kph)
-//		currentSpeed = (float) (2.236936 * currentSpeed);
         float currentSpeed = 0.0f;
         if(CustomLocationManager.getLocation() != null){
             currentSpeed = CustomLocationManager.getLocation().getSpeed();
@@ -653,6 +662,9 @@ public class MainService extends Service {
 						+ profile.getThresholdSpeed()
 						+ " usertestStatus:"
 						+ mTestStatus);
+        if(LauncherScreen.getInstance() != null) {
+            LauncherScreen.getInstance().updateSpeed(String.valueOf(currentSpeed));
+        }
 
 		if (currentSpeed >= profile.getThresholdSpeed()) {
 			int callState = Utility.getPhoneCallState(getApplicationContext());
@@ -660,26 +672,21 @@ public class MainService extends Service {
 				// Check if the usertest is enabled or not, if not then
 				// directly lock the screen without showing the speed alert.
 				if (!profile.isTestEnable()) {
-
+                        //out going call
 						if ((callState == TelephonyManager.CALL_STATE_OFFHOOK)
 								&& !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())) {
 							if (outgoingNumber != null || mCallDuringEmergency) {
 								disconnectCall(true, true);
+                                //lock the screen
+                                sendMsgToServiceHandler(MessageType.LOCK_SCREEN, null);
 							}
-						}
-
-						// If the call state is not ringing, then only lock the
-						// screen, so that user is able accept the incoming call
-						if (callState != TelephonyManager.CALL_STATE_RINGING) {
-							if (screenStatus != ScreenState.LOCK
-									&& !Utility.isKeyguardEnabled(this)) {
-								// Lock the screen by showing alert.
-								sendMsgToServiceHandler(
-										MessageType.LOCK_ON_SPEED,
-										null);
-								mTestStatus = TestResultCategory.DISABLED;
-							}
-						}
+						}else {
+                            if (!isEmergencyCall() && !Utility.isHeadsetConnected(getInstance(), profile.isHeadsetConnectionAllowed())) {
+                                disconnectCall(true, true);
+                                //lock the screen
+                                sendMsgToServiceHandler(MessageType.LOCK_SCREEN, null);
+                            }
+                        }
 
 				} else {
 					String updatedSpeedToShow = " "
@@ -695,7 +702,6 @@ public class MainService extends Service {
 										MessageType.START_USERTEST_IN_CALL,
 										null);
 							} else {
-								Log.i(TAG, "Display D/P screen");
 								sendMsgToServiceHandler(
 										MessageType.SPEED_EXCEED,
 										updatedSpeedToShow);
@@ -1131,6 +1137,7 @@ public class MainService extends Service {
 							// Check if any call is going on
 							int callState = Utility
 									.getPhoneCallState(this);
+                            Log.d(TAG, "call state :"+callState);
 							if (callState == TelephonyManager.CALL_STATE_RINGING
 									|| callState == TelephonyManager.CALL_STATE_OFFHOOK) {
 								return true;
@@ -1234,16 +1241,19 @@ public class MainService extends Service {
 	 */
 	private void registerScreenLockStatusChangeReceiver() {
 		Log.i(TAG, "Starting the listener for screen lock and unlock");
-		if (mScreenLockChangeReceiver != null) {
-			unregisterReceiver(mScreenLockChangeReceiver);
-			mScreenLockChangeReceiver = null;
-		}
+        unRegisterScreenLockStatusChangeReceiver();
 		mScreenLockChangeReceiver = new ScreenLockStatusChangeReceiver();
 		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
 		filter.addAction(Intent.ACTION_SCREEN_OFF);
 		registerReceiver(mScreenLockChangeReceiver, filter);
 		Log.i(TAG, "Listener added for screen lock and unlock");
 	}
+    private void unRegisterScreenLockStatusChangeReceiver() {
+        if (mScreenLockChangeReceiver != null) {
+            unregisterReceiver(mScreenLockChangeReceiver);
+            mScreenLockChangeReceiver = null;
+        }
+    }
 
 	private void startUsertestInitTimeout() {
 		Log.d(TAG, "inside startUsertestInitTimeout() ");
@@ -1272,15 +1282,6 @@ public class MainService extends Service {
 	}
 
 	private void dismissAllScreens() {
-		// finish speed alert Screen
-		/*if (SpeedAlertScreen.getInstance() != null) {
-			SpeedAlertScreen.getInstance().forceStop();
-		}
-		// finish UserTest initiator Screen
-		if (UserTestInitScreen.getInstance() != null) {
-			UserTestInitScreen.getInstance().forceStop();
-		}*/
-		// finish UserTest screen
 		if (UserTestScreen.getInstance() != null) {
 			UserTestScreen.getInstance().forceStop();
 		}

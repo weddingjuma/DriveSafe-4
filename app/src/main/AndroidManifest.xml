@@ -26,35 +26,35 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
-        <activity android:name="com.sunilsahoo.drivesafe.ui.LauncherScreen" >
+        <activity android:name="com.sunilsahoo.drivesafe.ui.LauncherScreen" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.sunilsahoo.drivesafe.ui.GPSEnableAlert"
+            android:name="com.sunilsahoo.drivesafe.ui.GPSEnableAlert" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.sunilsahoo.drivesafe.ui.DaySettingsActivity"
+        <activity android:name="com.sunilsahoo.drivesafe.ui.DaySettingsActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
         </activity>
 
-        <activity android:name="com.sunilsahoo.drivesafe.ui.DeviceAdminScreen" >
+        <activity android:name="com.sunilsahoo.drivesafe.ui.DeviceAdminScreen" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.sunilsahoo.drivesafe.ui.UserTestScreen"
+            android:name="com.sunilsahoo.drivesafe.ui.UserTestScreen" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="com.sunilsahoo.drivesafe.ui.UserTestResultAlert"
+            android:name="com.sunilsahoo.drivesafe.ui.UserTestResultAlert" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait" >
         </activity>
